@@ -52,6 +52,49 @@
   font-size: 1rem;
 }
 
+.footer-whatsapp-icon {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+}
+
+.whatsapp-link:hover .footer-whatsapp-icon {
+  transform: scale(1.1);
+}
+
+/* Specific icon styling */
+.footer-link .fa-envelope {
+  color: #dc3545;
+}
+
+.footer-link .fa-whatsapp {
+  color: #25d366; /* WhatsApp green */
+}
+
+.footer-link .fa-linkedin {
+  color: #0077b5; /* LinkedIn blue */
+}
+
+.footer-link .fa-github {
+  color: #333333; /* GitHub dark */
+}
+
+.footer-link:hover .fa-envelope {
+  color: #c82333;
+}
+
+.footer-link:hover .fa-whatsapp {
+  color: #128c7e; /* Darker WhatsApp green */
+}
+
+.footer-link:hover .fa-linkedin {
+  color: #005885;
+}
+
+.footer-link:hover .fa-github {
+  color: #1a1a1a;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .footer-content {

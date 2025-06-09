@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { AppShellComponent } from './app-shell/app-shell.component';
+import { WhatsappFloatComponent } from './components/whatsapp-float/whatsapp-float.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [AppShellComponent],
+  imports: [AppShellComponent, WhatsappFloatComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

@@ -33,7 +33,7 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   goBack(): void {
-    this.location.back();
+ this.router.navigate(['/portfolio']);
   }
 
   openExternalLink(url: string): void {
