@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { CommonModule } from '@angular/common';
 import { TimelineItemComponent } from './timeline-item.component';
 
 describe('TimelineItemComponent', () => {
@@ -8,10 +8,9 @@ describe('TimelineItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TimelineItemComponent]
-    })
-    .compileComponents();
-    
+      imports: [CommonModule, TimelineItemComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(TimelineItemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { Project, ProjectCardComponent } from '../project-card/project-card.component';
+import { Project } from '../project-card/project-card.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, NgFor } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-completed-projects',
   standalone: true,
-  imports: [ProjectCardComponent, FormsModule, CommonModule, NgFor],
+  imports: [FormsModule, CommonModule, NgFor, RouterModule],
   templateUrl: './completed-projects.component.html',
   styleUrl: './completed-projects.component.css'
 })
@@ -16,13 +17,22 @@ export class CompletedProjectsComponent {
       title: 'E-commerce Platform',
       description: 'Developed a full-stack e-commerce platform with Angular, Node.js, and MongoDB.',
       viewLink: '#',
-      githubLink: '#'
+      githubLink: '#',
+      technologies: ['Angular', 'Node.js', 'MongoDB', 'Express']
     },
     {
       title: 'Portfolio Website',
       description: 'Designed and developed a personal portfolio website using Angular and SCSS.',
       viewLink: '#',
-      githubLink: '#'
+      githubLink: '#',
+      technologies: ['Angular', 'SCSS', 'TypeScript', 'HTML5']
+    },
+    {
+      title: 'Task Management App',
+      description: 'Built a collaborative task management application with real-time updates.',
+      viewLink: '#',
+      githubLink: '#',
+      technologies: ['React', 'Node.js', 'Socket.io', 'PostgreSQL']
     }
   ];
 

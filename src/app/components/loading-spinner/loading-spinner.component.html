@@ -1,3 +1,5 @@
-<div class="loading-spinner-overlay" *ngIf="isLoading$ | async">
-  <div class="spinner"></div>
+<div class="loading-spinner" *ngIf="isLoading$ | async" role="status" aria-label="Loading content">
+  <div class="spinner animate-spin"></div>
+  <p class="loading-text">Loading...</p>
+  <span class="sr-only">Loading...</span>
 </div>

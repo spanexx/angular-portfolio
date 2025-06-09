@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './contact-section.component.html',
-  styles: ``
+  styleUrl: './contact-section.component.scss'
 })
 export class ContactSectionComponent {
 

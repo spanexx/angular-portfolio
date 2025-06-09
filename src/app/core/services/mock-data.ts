@@ -99,3 +99,18 @@ export const mockContactInfo: ContactInfo = {
   linkedin: '',
   github: ''
 };
+
+export const mockSocialLinks: any[] = [
+  {
+    platform: 'LinkedIn',
+    url: 'https://www.linkedin.com/in/johndoe'
+  },
+  {
+    platform: 'GitHub',
+    url: 'https://github.com/spanexx'
+  },
+  {
+    platform: 'Twitter',
+    url: 'https://twitter.com/johndoe'
+  }
+];

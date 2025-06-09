@@ -1,0 +1,215 @@
+// Contact Section Component Styles
+@import '../../../../../styles/abstracts/variables';
+@import '../../../../../styles/abstracts/mixins';
+
+.contact-section {
+  margin-bottom: $spacing-2xl;
+  padding: $spacing-xl;
+  background: $white;
+  border-radius: $border-radius;
+  box-shadow: $shadow-sm;
+  border: 1px solid $border-color;
+  transition: all $transition-standard $transition-easing;
+
+  @include mobile {
+    margin-bottom: $spacing-lg;
+    padding: $spacing-lg;
+  }
+
+  &:hover {
+    box-shadow: $shadow-md;
+    border-color: $primary-light;
+  }
+
+  h3 {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin-bottom: $spacing-lg;
+    text-align: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include mobile {
+      font-size: $font-size-lg;
+      margin-bottom: $spacing-md;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -$spacing-sm;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 2px;
+      background: linear-gradient(90deg, $primary-color, $primary-light);
+      border-radius: 1px;
+    }
+
+    i {
+      margin-right: $spacing-sm;
+      color: $primary-color;
+    }
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      padding: $spacing-sm;
+      border-radius: $border-radius-sm;
+      transition: all $transition-fast $transition-easing;
+      margin-bottom: $spacing-xs;
+
+      @include mobile {
+        padding: $spacing-xs;
+      }
+
+      &:hover {
+        background-color: $light-gray;
+        transform: translateX(4px);
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      i {
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: $spacing-md;
+        color: $primary-color;
+        font-size: $font-size-base;
+        transition: all $transition-fast $transition-easing;
+
+        @include mobile {
+          width: 16px;
+          height: 16px;
+          margin-right: $spacing-sm;
+          font-size: $font-size-sm;
+        }
+      }
+
+      &:hover i {
+        color: $primary-dark;
+        transform: scale(1.1);
+      }
+
+      .contact-details {
+        display: flex;
+        flex-direction: column;
+
+        .contact-label {
+          font-size: $font-size-sm;
+          color: $text-secondary;
+          font-weight: $font-weight-medium;
+
+          @include mobile {
+            font-size: $font-size-xs;
+          }
+        }
+
+        .contact-value {
+          color: $text-primary;
+          font-weight: $font-weight-regular;
+
+          a {
+            color: inherit;
+            text-decoration: none;
+            transition: color $transition-fast $transition-easing;
+
+            &:hover {
+              color: $primary-color;
+            }
+          }
+        }
+      }
+
+      // Specific icon styling
+      .fa-envelope {
+        color: $accent-success;
+      }
+
+      .fa-phone {
+        color: $primary-color;
+      }
+
+      .fa-map-marker-alt {
+        color: $accent-warning;
+      }
+
+      .fa-github {
+        color: $text-primary;
+      }
+
+      .fa-linkedin {
+        color: #0077b5; // LinkedIn blue
+      }
+
+      &:hover .fa-envelope {
+        color: darken($accent-success, 10%);
+      }
+
+      &:hover .fa-phone {
+        color: $primary-dark;
+      }
+
+      &:hover .fa-map-marker-alt {
+        color: darken($accent-warning, 10%);
+      }
+
+      &:hover .fa-github {
+        color: $text-primary;
+      }
+
+      &:hover .fa-linkedin {
+        color: darken(#0077b5, 10%);
+      }
+    }
+  }
+}
+
+// Animation for initial load
+.contact-section {
+  animation: slideInLeft 0.6s ease-out;
+  animation-delay: 0.3s;
+  animation-fill-mode: both;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Responsive improvements
+@include tablet {
+  .contact-section {
+    padding: $spacing-lg;
+    
+    h3 {
+      font-size: $font-size-xl;
+    }
+    
+    .contact-item {
+      .contact-details .contact-label {
+        font-size: $font-size-sm;
+      }
+    }
+  }
+}

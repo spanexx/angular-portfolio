@@ -208,9 +208,12 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    align-items: center;
+    align-items: flex-start;
     padding: $spacing-md;
     gap: $spacing-md;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    background-color: rgba($white, 0.95);
   }
 
   .profile-section {
@@ -220,6 +223,7 @@
     margin-bottom: 0;
     padding-bottom: 0;
     flex-shrink: 0;
+    max-width: 120px;
   }
 
   .contact-section,
@@ -230,6 +234,7 @@
     h3 {
       margin-bottom: $spacing-sm;
       font-size: $font-size-base;
+      text-align: center;
     }
 
     ul {
@@ -247,6 +252,16 @@
         padding: $spacing-xs;
         font-size: $font-size-xs;
         white-space: nowrap;
+        border-radius: $border-radius-sm;
+        
+        span {
+          display: none; /* Hide text on mobile, show only icons */
+        }
+        
+        i {
+          margin-right: 0;
+          font-size: $font-size-lg;
+        }
       }
     }
   }

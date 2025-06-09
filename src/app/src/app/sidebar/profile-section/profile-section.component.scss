@@ -37,6 +37,7 @@
   font-size: 3rem;
   box-shadow: $shadow-lg;
   transition: transform $transition-standard $transition-easing;
+  overflow: hidden;
 
   @include mobile {
     font-size: 2rem;
@@ -48,6 +49,15 @@
 
   i {
     opacity: 0.9;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+    display: block;
   }
 }
 
@@ -69,11 +79,6 @@
     @include mobile {
       font-size: $font-size-xl;
     }
-  }
-
-  // Hide the img tag if it exists (seems to be duplicated in template)
-  img {
-    display: none;
   }
 }
 

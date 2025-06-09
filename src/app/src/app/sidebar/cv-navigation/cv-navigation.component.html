@@ -1,8 +1,20 @@
 <div class="cv-section">
     <h3>CV</h3>
     <ul>
-        <li><a [routerLink]="['/education']">See Education History</a></li>
-        <li><a [routerLink]="['/experience']">See Experience History</a></li>
-        <li><a [routerLink]="['/certifications']">See Certification</a></li>
+        <li>
+            <a [routerLink]="['/education']" routerLinkActive="active">
+                <span>See Education History</span>
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="['/experience']" routerLinkActive="active">
+                <span>See Experience History</span>
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="['/certifications']" routerLinkActive="active">
+                <span>See Certification</span>
+            </a>
+        </li>
     </ul>
 </div>

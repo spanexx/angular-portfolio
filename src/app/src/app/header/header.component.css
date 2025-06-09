@@ -1,15 +1,67 @@
 :host {
   display: block;
-  background-color: #3f51b5; /* Example color */
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
   color: white;
-  padding: 1rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 2rem 1rem;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
   text-align: center;
+  position: relative;
+}
+
+header h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 1.1rem;
+  opacity: 0.9;
+  font-weight: 400;
+}
+
+/* Tablet responsiveness */
+@media (max-width: 1024px) {
+  :host {
+    padding: 1.5rem 1rem;
+  }
+  
+  header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+  }
 }
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   :host {
-    padding: 0.8rem;
+    padding: 1rem 1rem 1rem 4rem; /* Extra left padding for mobile menu button */
+  }
+  
+  header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .subtitle {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  :host {
+    padding: 1rem 1rem 1rem 4.5rem;
+  }
+  
+  header h1 {
+    font-size: 1.3rem;
+  }
+  
+  .subtitle {
+    font-size: 0.85rem;
   }
 }

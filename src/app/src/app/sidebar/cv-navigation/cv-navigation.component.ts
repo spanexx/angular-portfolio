@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [RouterModule],
   templateUrl: './cv-navigation.component.html',
-  styles: ``
+  styleUrl: './cv-navigation.component.scss'
 })
 export class CvNavigationComponent {
 

@@ -1,3 +1,14 @@
+<!-- Mobile Navigation - positioned outside main container for proper overlay -->
+<app-mobile-nav 
+  [isOpen]="isMobileNavOpen" 
+  (closeNavigation)="closeMobileNav()">
+</app-mobile-nav>
+
+<!-- Mobile Menu Button - positioned outside main container -->
+<button class="mobile-menu-btn" (click)="openMobileNav()">
+  <mat-icon>menu</mat-icon>
+</button>
+
 <div class="container">
   <app-sidebar></app-sidebar>
   <main class="content">

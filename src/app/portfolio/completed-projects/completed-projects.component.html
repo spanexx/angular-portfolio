@@ -1,11 +1,26 @@
 <section id="completed-projects">
     <h2>Completed Projects</h2>
-    <div class="projects-grid">
-        <app-project-card
-            *ngFor="let project of completedProjects"
-            [project]="project"
-            (cardClicked)="handleCardClick(project)">
-        </app-project-card>
+    <div class="projects-list">
+        <div class="project-list-item"
+                     *ngFor="let project of completedProjects"
+                     (click)="handleCardClick(project)"
+                     inViewAnimation animationType="fadeIn">
+            <div class="project-info">
+                <div class="project-title-section">
+                    <h3 class="project-title">{{ project.title }}</h3>
+                </div>
+                <div class="project-description">
+                    <p>{{ project.description }}</p>
+                </div>
+                <div class="project-technologies" *ngIf="project.technologies">
+                    <span class="tech-tag" *ngFor="let tech of project.technologies">{{ tech }}</span>
+                </div>
+            </div>
+            <div class="project-actions">
+                <a *ngIf="project.viewLink" [routerLink]="['/project', project.title]" class="btn btn-sm">View</a>
+                <a *ngIf="project.githubLink" [href]="project.githubLink" class="btn btn-sm btn-outline">GitHub</a>
+            </div>
+        </div>
     </div>
     <div class="see-more">
         <a href="#projects-page" class="btn btn-large">See more projects</a>
