@@ -1,0 +1,15 @@
+:host {
+  display: block;
+  background-color: #3f51b5; /* Example color */
+  color: white;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  :host {
+    padding: 0.8rem;
+  }
+}

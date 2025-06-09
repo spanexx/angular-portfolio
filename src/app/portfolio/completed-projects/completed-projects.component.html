@@ -1,0 +1,13 @@
+<section id="completed-projects">
+    <h2>Completed Projects</h2>
+    <div class="projects-grid">
+        <app-project-card
+            *ngFor="let project of completedProjects"
+            [project]="project"
+            (cardClicked)="handleCardClick(project)">
+        </app-project-card>
+    </div>
+    <div class="see-more">
+        <a href="#projects-page" class="btn btn-large">See more projects</a>
+    </div>
+</section>

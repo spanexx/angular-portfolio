@@ -1,0 +1,10 @@
+<section id="certification">
+    <h2>Certifications</h2>
+    <div class="certifications-grid">
+        <div class="certification-card" *ngFor="let certification of certificationItems">
+            <h3>{{ certification.title }}</h3>
+            <p>{{ certification.organization }}</p>
+            <p>Date: {{ certification.date }}</p>
+        </div>
+    </div>
+</section>

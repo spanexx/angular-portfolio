@@ -1,0 +1,121 @@
+@use '@angular/material' as mat;
+@import 'abstracts/variables'; // Import existing variables
+
+// Define custom palettes based on existing variables
+$custom-primary-palette: (
+  50: lighten($primary-color, 40%),
+  100: lighten($primary-color, 30%),
+  200: lighten($primary-color, 20%),
+  300: lighten($primary-color, 10%),
+  400: lighten($primary-color, 5%),
+  500: $primary-color,
+  600: darken($primary-color, 5%),
+  700: darken($primary-color, 10%),
+  800: darken($primary-color, 15%),
+  900: darken($primary-color, 20%),
+  A100: lighten($primary-color, 15%),
+  A200: $primary-color,
+  A400: darken($primary-color, 5%),
+  A700: darken($primary-color, 10%),
+  contrast: (
+    50: $text-color,
+    100: $text-color,
+    200: $text-color,
+    300: $text-color,
+    400: $text-color,
+    500: $light-color,
+    600: $light-color,
+    700: $light-color,
+    800: $light-color,
+    900: $light-color,
+    A100: $text-color,
+    A200: $light-color,
+    A400: $light-color,
+    A700: $light-color,
+  )
+);
+
+$custom-accent-palette: (
+  50: lighten($accent-color, 40%),
+  100: lighten($accent-color, 30%),
+  200: lighten($accent-color, 20%),
+  300: lighten($accent-color, 10%),
+  400: lighten($accent-color, 5%),
+  500: $accent-color,
+  600: darken($accent-color, 5%),
+  700: darken($accent-color, 10%),
+  800: darken($accent-color, 15%),
+  900: darken($accent-color, 20%),
+  A100: lighten($accent-color, 15%),
+  A200: $accent-color,
+  A400: darken($accent-color, 5%),
+  A700: darken($accent-color, 10%),
+  contrast: (
+    50: $text-color,
+    100: $text-color,
+    200: $text-color,
+    300: $text-color,
+    400: $text-color,
+    500: $light-color,
+    600: $light-color,
+    700: $light-color,
+    800: $light-color,
+    900: $light-color,
+    A100: $text-color,
+    A200: $light-color,
+    A400: $light-color,
+    A700: $light-color,
+  )
+);
+
+$custom-warn-palette: (
+  50: lighten($accent-color, 40%), // Using accent for warn for now
+  100: lighten($accent-color, 30%),
+  200: lighten($accent-color, 20%),
+  300: lighten($accent-color, 10%),
+  400: lighten($accent-color, 5%),
+  500: $accent-color,
+  600: darken($accent-color, 5%),
+  700: darken($accent-color, 10%),
+  800: darken($accent-color, 15%),
+  900: darken($accent-color, 20%),
+  A100: lighten($accent-color, 15%),
+  A200: $accent-color,
+  A400: darken($accent-color, 5%),
+  A700: darken($accent-color, 10%),
+  contrast: (
+    50: $text-color,
+    100: $text-color,
+    200: $text-color,
+    300: $text-color,
+    400: $text-color,
+    500: $light-color,
+    600: $light-color,
+    700: $light-color,
+    800: $light-color,
+    900: $light-color,
+    A100: $text-color,
+    A200: $light-color,
+    A400: $light-color,
+    A700: $light-color,
+  )
+);
+
+
+// Create the theme object with custom palettes
+$custom-theme: mat.define-light-theme((
+  color: (
+    primary: mat.define-palette($custom-primary-palette),
+    accent: mat.define-palette($custom-accent-palette),
+    warn: mat.define-palette($custom-warn-palette),
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+
+// Apply the custom theme
+@include mat.all-component-themes($custom-theme);
+
+// Optional: Include typography and density
+@include mat.typography-hierarchy($custom-theme);
+@include mat.density($custom-theme);

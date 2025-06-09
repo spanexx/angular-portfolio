@@ -1,0 +1,13 @@
+<section id="projects-in-progress">
+    <h2>Projects in Progress</h2>
+    <div class="projects-grid">
+        <app-project-card
+            *ngFor="let project of projectsInProgress"
+            [project]="project"
+            (cardClicked)="handleCardClick(project)">
+        </app-project-card>
+    </div>
+    <div class="see-more">
+        <a href="#ongoing-projects-page" class="btn btn-large">See more ongoing projects</a>
+    </div>
+</section>
