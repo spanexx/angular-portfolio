@@ -9,5 +9,7 @@ export enum ProjectStatus {
   Completed = 'Completed',
   
   /** Project is no longer maintained */
-  Archived = 'Archived'
+  Archived = 'Archived',
+  /** Project is currently in progress */
+  InProgress = 'In Progress'
 }

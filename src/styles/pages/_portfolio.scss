@@ -1,0 +1,210 @@
+// Portfolio Page Styles
+@import '../abstracts/variables';
+@import '../abstracts/mixins';
+
+.portfolio-page,
+.portfolio-container {
+  max-width: $content-max-width;
+  margin: 0 auto;
+  padding: $spacing-xl;
+  background-color: $off-white;
+  min-height: 100vh;
+  
+  .portfolio-header {
+    text-align: left;
+    margin-bottom: $spacing-3xl;
+    padding: 0;
+    
+    h1 {
+      @include heading-1;
+      color: $text-primary;
+      margin-bottom: $spacing-md;
+      border-bottom: 3px solid $primary-color;
+      padding-bottom: $spacing-md;
+      
+      span {
+        color: $primary-color;
+        font-weight: $font-weight-regular;
+        font-family: $font-family-mono;
+        font-size: $font-size-2xl;
+      }
+    }
+
+    @include mobile {
+      margin-bottom: $spacing-2xl;
+      
+      h1 {
+        @include heading-2;
+        
+        span {
+          font-size: $font-size-lg;
+          display: block;
+          margin-top: $spacing-xs;
+        }
+      }
+    }
+  }
+
+  // Projects grid specific to portfolio page
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: $spacing-lg;
+    margin-bottom: $spacing-2xl;
+
+    @include mobile {
+      grid-template-columns: 1fr;
+      gap: $spacing-md;
+    }
+  }
+
+    @include tablet {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: $spacing-lg;
+    }
+  }
+
+  // Project sections
+  .project-section {
+    margin-bottom: $spacing-3xl;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    h2 {
+      @include heading-2;
+      color: $text-primary;
+      margin-bottom: $spacing-xl;
+      position: relative;
+      padding-left: $spacing-lg;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 4px;
+        height: 60%;
+        background: linear-gradient(180deg, $primary-color, $primary-light);
+        border-radius: 2px;
+      }
+
+      @include mobile {
+        @include heading-3;
+        padding-left: $spacing-md;
+      }
+    }
+  }
+
+  // Completed projects section
+  .completed-projects {
+    .project-card {
+      @include hover-lift;
+      
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: $shadow-xl;
+      }
+    }
+  }
+
+  // Projects in progress section
+  .projects-in-progress {
+    .project-card {
+      border-left: 4px solid $accent-warning;
+      
+      .progress-bar {
+        margin-top: $spacing-md;
+        margin-bottom: $spacing-lg;
+      }
+    }
+  }
+
+  // See more sections
+  .see-more {
+    text-align: center;
+    margin-top: $spacing-2xl;
+    padding: $spacing-xl 0;
+    border-top: 1px solid $border-color;
+
+    .btn {
+      @include button-primary;
+      @include button-large;
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: $shadow-lg;
+      }
+    }
+  }
+
+  // Portfolio stats (if added later)
+  .portfolio-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: $spacing-lg;
+    margin: $spacing-3xl 0;
+
+    .stat-card {
+      @include card;
+      text-align: center;
+      padding: $spacing-xl;
+
+      .stat-number {
+        @include heading-1;
+        color: $primary-color;
+        margin-bottom: $spacing-sm;
+        font-weight: $font-weight-bold;
+      }
+
+      .stat-label {
+        @include small-text;
+        color: $text-secondary;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-weight: $font-weight-medium;
+      }
+    }
+
+    @include mobile {
+      grid-template-columns: repeat(2, 1fr);
+      gap: $spacing-md;
+      margin: $spacing-2xl 0;
+
+      .stat-card {
+        padding: $spacing-lg;
+
+        .stat-number {
+          @include heading-3;
+        }
+      }
+    }
+  }
+}
+
+// Portfolio page animations
+.portfolio-page {
+  animation: fadeInUp 0.6s ease-out;
+
+  .project-section {
+    animation: fadeInUp 0.6s ease-out;
+    animation-fill-mode: both;
+
+    &:nth-child(1) { animation-delay: 0.1s; }
+    &:nth-child(2) { animation-delay: 0.2s; }
+    &:nth-child(3) { animation-delay: 0.3s; }
+  }
+}
+
+// Loading state for portfolio
+.portfolio-loading {
+  @include center-flex;
+  min-height: 400px;
+  
+  .loading-text {
+    color: $text-secondary;
+    margin-top: $spacing-lg;
+  }
+}

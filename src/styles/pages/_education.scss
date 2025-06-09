@@ -1,0 +1,296 @@
+// Education Page Styles
+@import '../abstracts/variables';
+@import '../abstracts/mixins';
+
+.education-page {
+  .page-header {
+    text-align: center;
+    margin-bottom: $spacing-3xl;
+    padding: $spacing-2xl 0;
+
+    h2 {
+      @include heading-1;
+      color: $text-primary;
+      margin-bottom: $spacing-md;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -$spacing-md;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background: linear-gradient(90deg, $accent-warning, $primary-color);
+        border-radius: 2px;
+      }
+    }
+
+    @include mobile {
+      padding: $spacing-lg 0;
+      margin-bottom: $spacing-2xl;
+
+      h2 {
+        @include heading-2;
+
+        &::after {
+          width: 60px;
+          height: 2px;
+        }
+      }
+    }
+  }
+
+  // Timeline container
+  .timeline-container {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+
+    @include mobile {
+      max-width: 100%;
+      padding: 0 $spacing-md;
+    }
+  }
+
+  // Education timeline specific styles
+  .timeline {
+    .timeline-item {
+      &:hover {
+        .timeline-content {
+          transform: translateX(8px);
+          box-shadow: $shadow-lg;
+        }
+
+        .timeline-marker {
+          transform: scale(1.2);
+          background-color: $accent-warning;
+        }
+      }
+
+      .timeline-date {
+        color: $accent-warning;
+        font-weight: $font-weight-semibold;
+      }
+
+      .timeline-title {
+        color: $text-primary;
+        margin-bottom: $spacing-xs;
+      }
+
+      .timeline-subtitle {
+        color: $primary-color;
+        font-weight: $font-weight-medium;
+        margin-bottom: $spacing-sm;
+      }
+
+      .timeline-description {
+        color: $text-secondary;
+        line-height: 1.6;
+      }
+    }
+  }
+
+  // Coursework section (if added)
+  .coursework-section {
+    margin-top: $spacing-3xl;
+    padding-top: $spacing-3xl;
+    border-top: 1px solid $border-color;
+
+    h3 {
+      @include heading-3;
+      text-align: center;
+      margin-bottom: $spacing-2xl;
+      color: $text-primary;
+    }
+
+    .coursework-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: $spacing-xl;
+
+      .course-category {
+        @include card;
+        padding: $spacing-xl;
+        border-left: 4px solid $accent-warning;
+
+        .category-title {
+          @include heading-4;
+          color: $accent-warning;
+          margin-bottom: $spacing-lg;
+          text-align: center;
+        }
+
+        .course-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+
+          li {
+            padding: $spacing-sm 0;
+            border-bottom: 1px solid rgba($border-color, 0.5);
+            color: $text-primary;
+            position: relative;
+            padding-left: $spacing-lg;
+
+            &:last-child {
+              border-bottom: none;
+            }
+
+            &::before {
+              content: '•';
+              position: absolute;
+              left: 0;
+              color: $accent-warning;
+              font-weight: bold;
+            }
+
+            &:hover {
+              color: $primary-color;
+              transform: translateX(4px);
+              transition: all $transition-fast;
+            }
+          }
+        }
+      }
+
+      @include mobile {
+        grid-template-columns: 1fr;
+        gap: $spacing-lg;
+      }
+    }
+  }
+
+  // Academic achievements section (if added)
+  .academic-achievements {
+    margin-top: $spacing-3xl;
+
+    h3 {
+      @include heading-3;
+      text-align: center;
+      margin-bottom: $spacing-2xl;
+      color: $text-primary;
+    }
+
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: $spacing-xl;
+
+      .achievement-card {
+        @include card;
+        padding: $spacing-xl;
+        text-align: center;
+        border-left: 4px solid $accent-warning;
+
+        .achievement-icon {
+          font-size: 2.5rem;
+          color: $accent-warning;
+          margin-bottom: $spacing-lg;
+        }
+
+        .achievement-title {
+          @include heading-4;
+          color: $text-primary;
+          margin-bottom: $spacing-sm;
+        }
+
+        .achievement-description {
+          color: $text-secondary;
+          line-height: 1.6;
+        }
+
+        .achievement-date {
+          @include small-text;
+          color: $accent-warning;
+          font-weight: $font-weight-medium;
+          margin-top: $spacing-md;
+        }
+      }
+
+      @include mobile {
+        grid-template-columns: 1fr;
+        gap: $spacing-lg;
+      }
+    }
+  }
+
+  // GPA or grade section (if added)
+  .academic-stats {
+    margin-top: $spacing-3xl;
+    padding: $spacing-2xl;
+    background: linear-gradient(135deg, rgba($accent-warning, 0.1), rgba($primary-color, 0.05));
+    border-radius: $border-radius;
+    text-align: center;
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: $spacing-xl;
+      max-width: 600px;
+      margin: 0 auto;
+
+      .stat-item {
+        .stat-value {
+          @include heading-2;
+          color: $accent-warning;
+          margin-bottom: $spacing-xs;
+          font-weight: $font-weight-bold;
+        }
+
+        .stat-label {
+          @include small-text;
+          color: $text-secondary;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          font-weight: $font-weight-medium;
+        }
+      }
+
+      @include mobile {
+        grid-template-columns: repeat(2, 1fr);
+        gap: $spacing-lg;
+      }
+    }
+  }
+}
+
+// Education page animations
+.education-page {
+  animation: fadeInUp 0.6s ease-out;
+
+  .timeline-item {
+    animation: slideInFromRight 0.6s ease-out;
+    animation-fill-mode: both;
+
+    @for $i from 1 through 10 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{$i * 0.1}s;
+      }
+    }
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Education page loading state
+.education-loading {
+  @include center-flex;
+  min-height: 400px;
+  flex-direction: column;
+
+  .loading-text {
+    color: $text-secondary;
+    margin-top: $spacing-lg;
+  }
+}

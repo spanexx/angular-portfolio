@@ -1,0 +1,96 @@
+// Header Layout Styles
+@import '../abstracts/variables';
+@import '../abstracts/mixins';
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-lg $spacing-xl;
+  background: linear-gradient(135deg, $primary-color, $primary-dark);
+  color: $white;
+  position: relative;
+  overflow: hidden;
+
+  // Subtle background pattern
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3e%3cdefs%3e%3cpattern id='grid' width='40' height='40' patternUnits='userSpaceOnUse'%3e%3cpath d='m 40 0 l 0 40 M 0 40 l 40 0' fill='none' stroke='%23ffffff' stroke-width='0.5' opacity='0.1'/%3e%3c/pattern%3e%3c/defs%3e%3crect width='100%25' height='100%25' fill='url(%23grid)' /%3e%3c/svg%3e");
+    z-index: 0;
+  }
+
+  * {
+    position: relative;
+    z-index: 1;
+  }
+
+  h1 {
+    @include heading-1;
+    margin: 0;
+    text-align: center;
+    font-weight: $font-weight-bold;
+    letter-spacing: -0.02em;
+
+    span {
+      @include small-text;
+      color: $primary-light;
+      font-weight: $font-weight-medium;
+      display: block;
+      margin-top: $spacing-xs;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+
+      @include mobile {
+        font-size: $font-size-xs;
+      }
+    }
+  }
+
+  @include mobile {
+    padding: $spacing-md;
+    
+    h1 {
+      @include heading-3;
+    }
+  }
+
+  @include tablet {
+    padding: $spacing-lg;
+  }
+}
+
+// Header animation on page load
+.header {
+  animation: headerSlideIn 0.8s ease-out;
+}
+
+@keyframes headerSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Header variants for different pages
+.header {
+  &.header-portfolio {
+    background: linear-gradient(135deg, $primary-color, $accent-success);
+  }
+
+  &.header-experience {
+    background: linear-gradient(135deg, $secondary-color, $primary-dark);
+  }
+
+  &.header-education {
+    background: linear-gradient(135deg, $accent-warning, $primary-color);
+  }
+}

@@ -1,0 +1,212 @@
+// Typography Styles
+@import '../abstracts/variables';
+@import '../abstracts/mixins';
+
+// Font imports (Google Fonts)
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+// Base typography
+html {
+  font-size: 16px; // Base font size
+}
+
+body {
+  font-family: $font-family-primary;
+  font-size: $font-size-base;
+  font-weight: $font-weight-regular;
+  line-height: 1.6;
+  color: $text-primary;
+}
+
+// Headings
+h1, .h1 {
+  @include heading-1;
+}
+
+h2, .h2 {
+  @include heading-2;
+}
+
+h3, .h3 {
+  @include heading-3;
+}
+
+h4, .h4 {
+  @include heading-4;
+}
+
+h5, .h5 {
+  @include heading-primary;
+  font-size: $font-size-lg;
+}
+
+h6, .h6 {
+  @include heading-primary;
+  font-size: $font-size-base;
+}
+
+// Paragraph styles
+p {
+  @include body-text;
+  margin-bottom: $spacing-md;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Small text
+small, .small {
+  @include small-text;
+}
+
+// Links
+a {
+  color: $primary-color;
+  text-decoration: none;
+  transition: color $transition-fast $transition-easing;
+
+  &:hover {
+    color: $primary-dark;
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $primary-color;
+    outline-offset: 2px;
+  }
+}
+
+// Lists
+ul, ol {
+  margin-bottom: $spacing-md;
+  padding-left: $spacing-lg;
+
+  li {
+    @include body-text;
+    margin-bottom: $spacing-xs;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Remove padding for navigation lists
+.nav-list,
+.menu-list {
+  padding-left: 0;
+  
+  li {
+    margin-bottom: 0;
+  }
+}
+
+// Blockquotes
+blockquote {
+  border-left: 4px solid $primary-color;
+  padding-left: $spacing-lg;
+  margin: $spacing-lg 0;
+  font-style: italic;
+  color: $text-secondary;
+}
+
+// Code styles
+code {
+  font-family: $font-family-mono;
+  font-size: 0.9em;
+  background-color: rgba($secondary-color, 0.1);
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  color: $text-primary;
+}
+
+pre {
+  font-family: $font-family-mono;
+  background-color: rgba($secondary-color, 0.05);
+  padding: $spacing-md;
+  border-radius: $border-radius-sm;
+  overflow-x: auto;
+  margin-bottom: $spacing-md;
+
+  code {
+    background: none;
+    padding: 0;
+  }
+}
+
+// Emphasized text
+strong, b {
+  font-weight: $font-weight-semibold;
+}
+
+em, i {
+  font-style: italic;
+}
+
+// Mark/highlight
+mark {
+  background-color: rgba($accent-warning, 0.2);
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+}
+
+// Text utilities
+.text-primary {
+  color: $text-primary !important;
+}
+
+.text-secondary {
+  color: $text-secondary !important;
+}
+
+.text-muted {
+  color: rgba($text-secondary, 0.7) !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.text-left {
+  text-align: left !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.font-weight-light {
+  font-weight: $font-weight-light !important;
+}
+
+.font-weight-normal {
+  font-weight: $font-weight-regular !important;
+}
+
+.font-weight-medium {
+  font-weight: $font-weight-medium !important;
+}
+
+.font-weight-semibold {
+  font-weight: $font-weight-semibold !important;
+}
+
+.font-weight-bold {
+  font-weight: $font-weight-bold !important;
+}
+
+// Responsive typography
+@include mobile {
+  h1, .h1 {
+    font-size: $font-size-3xl;
+  }
+
+  h2, .h2 {
+    font-size: $font-size-2xl;
+  }
+
+  h3, .h3 {
+    font-size: $font-size-xl;
+  }
+}

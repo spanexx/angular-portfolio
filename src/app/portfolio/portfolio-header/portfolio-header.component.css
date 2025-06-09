@@ -1,0 +1,43 @@
+/* Portfolio Header Component Styles */
+header {
+  margin-bottom: 2rem;
+  border-bottom: 3px solid var(--primary-color, #2563eb);
+  padding-bottom: 1rem;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  color: var(--text-primary, #111827);
+  font-weight: 700;
+  margin: 0;
+}
+
+header h1 span {
+  color: var(--primary-color, #2563eb);
+  font-weight: 400;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 2rem;
+  }
+  
+  header h1 span {
+    font-size: 1.5rem;
+    display: block;
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 1.75rem;
+  }
+  
+  header h1 span {
+    font-size: 1.25rem;
+  }
+}

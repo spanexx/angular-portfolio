@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [RouterModule],
   templateUrl: './profile-section.component.html',
-  styles: ``
+  styleUrls: ['profile-section.component.scss']
 })
 export class ProfileSectionComponent {
 

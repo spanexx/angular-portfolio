@@ -21,4 +21,16 @@ export interface Project {
   
   /** URL to live project or repository */
   projectUrl?: string;
+
+  /** URL to view the project */
+  viewLink?: string;
+
+  /** URL to the project's GitHub repository */
+  githubLink?: string;
+
+  /** Indicates if the project is in progress */
+  inProgress?: boolean;
+
+  /** Progress of the project (0-100) */
+  progress?: number;
 }

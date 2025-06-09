@@ -1,0 +1,172 @@
+// Main Layout Styles
+@import '../abstracts/variables';
+@import '../abstracts/mixins';
+
+// App container and main layout
+.container {
+  display: flex;
+  min-height: 100vh;
+  background-color: $background-light;
+
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+// Main content area
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: $background-light;
+  overflow-x: hidden;
+
+  // Content wrapper with max-width and centering
+  .content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: $spacing-xl;
+    width: 100%;
+
+    @include mobile {
+      padding: $spacing-md;
+    }
+
+    @include tablet {
+      padding: $spacing-lg;
+    }
+  }
+
+  // Section spacing
+  section {
+    margin-bottom: $spacing-3xl;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    // Section headers
+    h2 {
+      @include heading-2;
+      color: $text-primary;
+      margin-bottom: $spacing-xl;
+      position: relative;
+      padding-bottom: $spacing-md;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, $primary-color, $primary-light);
+        border-radius: 2px;
+      }
+    }
+
+    h3 {
+      @include heading-3;
+      color: $text-primary;
+      margin-bottom: $spacing-lg;
+    }
+  }
+}
+
+// Grid layouts
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: $spacing-xl;
+  margin-bottom: $spacing-2xl;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: $spacing-lg;
+  }
+}
+
+// See more sections
+.see-more {
+  text-align: center;
+  margin-top: $spacing-2xl;
+
+  .btn {
+    @include button-primary;
+    @include button-large;
+  }
+}
+
+// Page transitions
+.page-transition {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Loading states
+.loading {
+  @include center-flex;
+  padding: $spacing-3xl;
+  
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid $border-color;
+    border-top: 3px solid $primary-color;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Error states
+.error {
+  @include card;
+  text-align: center;
+  color: $accent-error;
+  background-color: rgba($accent-error, 0.05);
+  border: 1px solid rgba($accent-error, 0.2);
+
+  h3 {
+    color: $accent-error;
+    margin-bottom: $spacing-md;
+  }
+
+  p {
+    margin-bottom: $spacing-lg;
+  }
+}
+
+// Empty states
+.empty-state {
+  @include center-flex;
+  flex-direction: column;
+  padding: $spacing-3xl;
+  text-align: center;
+  color: $text-secondary;
+
+  i {
+    font-size: 3rem;
+    margin-bottom: $spacing-lg;
+    opacity: 0.5;
+  }
+
+  h3 {
+    color: $text-secondary;
+    margin-bottom: $spacing-md;
+  }
+}

@@ -1,0 +1,275 @@
+// Sidebar Layout Styles
+@import '../abstracts/variables';
+@import '../abstracts/mixins';
+
+.sidebar {
+  width: $sidebar-width;
+  min-height: 100vh;
+  background: $white;
+  border-right: 1px solid $border-color;
+  box-shadow: $shadow-sm;
+  padding: $spacing-xl $spacing-lg;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+  z-index: 100;
+
+  @include mobile {
+    width: 100%;
+    min-height: auto;
+    position: relative;
+    padding: $spacing-lg;
+    border-right: none;
+    border-bottom: 1px solid $border-color;
+  }
+}
+
+// Profile section in sidebar
+.profile-section {
+  text-align: center;
+  margin-bottom: $spacing-2xl;
+  padding-bottom: $spacing-xl;
+  border-bottom: 1px solid $border-color;
+
+  @include mobile {
+    margin-bottom: $spacing-lg;
+    padding-bottom: $spacing-lg;
+  }
+}
+
+.passport-photo {
+  position: relative;
+  margin: 0 auto $spacing-lg;
+  width: 120px;
+  height: 120px;
+
+  @include mobile {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+.photo-placeholder {
+  @include flex-center;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, $primary-light, $primary-color);
+  border-radius: 50%;
+  color: $white;
+  font-size: 3rem;
+  box-shadow: $shadow-lg;
+
+  @include mobile {
+    font-size: 2rem;
+  }
+
+  i {
+    opacity: 0.8;
+  }
+}
+
+.profile-photo {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: $shadow-lg;
+  border: 4px solid $white;
+}
+
+.name {
+  margin-bottom: $spacing-md;
+
+  h2 {
+    @include heading-3;
+    margin-bottom: $spacing-xs;
+    color: $text-primary;
+    cursor: pointer;
+    transition: color $transition-fast $transition-easing;
+
+    &:hover {
+      color: $primary-color;
+    }
+
+    @include mobile {
+      font-size: $font-size-xl;
+    }
+  }
+}
+
+.title {
+  p {
+    @include body-text;
+    color: $primary-color;
+    font-weight: $font-weight-medium;
+    margin-bottom: 0;
+
+    @include mobile {
+      font-size: $font-size-sm;
+    }
+  }
+}
+
+// Contact section
+.contact-section {
+  margin-bottom: $spacing-2xl;
+
+  @include mobile {
+    margin-bottom: $spacing-lg;
+  }
+
+  h3 {
+    @include heading-4;
+    margin-bottom: $spacing-md;
+    color: $text-primary;
+    font-size: $font-size-lg;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin-bottom: $spacing-sm;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    a {
+      @include nav-link;
+      padding: $spacing-xs $spacing-sm;
+      border-radius: $border-radius-sm;
+      font-size: $font-size-sm;
+      
+      &:hover {
+        background-color: rgba($primary-color, 0.05);
+        color: $primary-color;
+      }
+
+      i {
+        width: 1rem;
+        margin-right: $spacing-sm;
+        color: $primary-color;
+      }
+    }
+  }
+}
+
+// CV Navigation section
+.cv-section {
+  h3 {
+    @include heading-4;
+    margin-bottom: $spacing-md;
+    color: $text-primary;
+    font-size: $font-size-lg;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin-bottom: $spacing-xs;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    a {
+      @include nav-link;
+      font-size: $font-size-sm;
+      
+      &.active {
+        background-color: $primary-color;
+        color: $white;
+      }
+
+      &:hover:not(.active) {
+        background-color: rgba($primary-color, 0.1);
+        color: $primary-color;
+      }
+
+      i {
+        color: inherit;
+      }
+    }
+  }
+}
+
+// Responsive adjustments for mobile horizontal layout
+@include mobile {
+  .sidebar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: $spacing-md;
+    gap: $spacing-md;
+  }
+
+  .profile-section {
+    border-bottom: none;
+    border-right: 1px solid $border-color;
+    padding-right: $spacing-md;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    flex-shrink: 0;
+  }
+
+  .contact-section,
+  .cv-section {
+    margin-bottom: 0;
+    flex: 1;
+
+    h3 {
+      margin-bottom: $spacing-sm;
+      font-size: $font-size-base;
+    }
+
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $spacing-xs;
+      justify-content: center;
+
+      li {
+        margin-bottom: 0;
+        flex: 0 0 auto;
+      }
+
+      a {
+        padding: $spacing-xs;
+        font-size: $font-size-xs;
+        white-space: nowrap;
+      }
+    }
+  }
+}
+
+// Extra small screens
+@media (max-width: 480px) {
+  .sidebar {
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+
+  .profile-section {
+    border-right: none;
+    border-bottom: 1px solid $border-color;
+    padding-right: 0;
+    padding-bottom: $spacing-sm;
+    width: 100%;
+  }
+
+  .contact-section ul,
+  .cv-section ul {
+    flex-direction: column;
+    align-items: center;
+  }
+}

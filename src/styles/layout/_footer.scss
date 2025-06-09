@@ -1,0 +1,75 @@
+// Footer Layout Styles
+@import '../abstracts/variables';
+@import '../abstracts/mixins';
+
+.footer {
+  padding: $spacing-xl;
+  background-color: $text-primary;
+  color: $white;
+  text-align: center;
+  margin-top: auto;
+  border-top: 3px solid $primary-color;
+
+  p {
+    @include body-text;
+    margin: 0;
+    color: $text-secondary-light;
+    font-weight: $font-weight-regular;
+
+    @include mobile {
+      @include small-text;
+    }
+  }
+
+  // Links in footer
+  a {
+    color: $primary-light;
+    text-decoration: none;
+    font-weight: $font-weight-medium;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $white;
+    }
+  }
+
+  // Social links if added later
+  .social-links {
+    margin-top: $spacing-md;
+    display: flex;
+    justify-content: center;
+    gap: $spacing-md;
+
+    a {
+      @include center-flex;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgba($primary-color, 0.2);
+      color: $primary-light;
+      transition: all $transition-fast;
+
+      &:hover {
+        background-color: $primary-color;
+        color: $white;
+        transform: translateY(-2px);
+      }
+
+      i {
+        font-size: $font-size-lg;
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@include mobile {
+  .footer {
+    padding: $spacing-lg $spacing-md;
+  }
+}
+
+// Footer animation
+.footer {
+  animation: fadeIn 0.6s ease-out 0.3s both;
+}

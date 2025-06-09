@@ -1,22 +1,30 @@
+// Main SCSS - Professional Portfolio Theme
+
 // Abstracts
 @import 'abstracts/variables';
-// @import 'abstracts/mixins';
-// @import 'abstracts/functions';
+@import 'abstracts/mixins';
 
 // Base
-// @import 'base/reset';
-// @import 'base/typography';
-// @import 'base/base';
+@import 'base/reset';
+@import 'base/typography';
 
 // Components
-// @import 'components/buttons';
+@import 'components/buttons';
 @import 'components/cards';
 @import 'components/timeline';
 
 // Layout
-// @import 'layout/header';
-// @import 'layout/footer';
+@import 'layout/header';
+@import 'layout/footer';
+@import 'layout/sidebar';
+@import 'layout/main';
 
 // Pages
-// @import 'pages/home';
-// @import 'pages/about';
+@import 'pages/portfolio';
+@import 'pages/experience';
+@import 'pages/education';
+
+// Utilities
+@import 'utilities/spacing';
+@import 'utilities/text';
+@import 'utilities/display';

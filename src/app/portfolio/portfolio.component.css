@@ -1,0 +1,66 @@
+/* Portfolio Main Component Styles */
+.portfolio-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: var(--off-white, #f9fafb);
+  min-height: 100vh;
+}
+
+/* Spacing between sections */
+app-portfolio-header {
+  display: block;
+  margin-bottom: 2rem;
+}
+
+app-completed-projects {
+  display: block;
+  margin-bottom: 3rem;
+}
+
+app-projects-in-progress {
+  display: block;
+  margin-bottom: 3rem;
+}
+
+/* Global section styling */
+::ng-deep section {
+  background-color: white;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .portfolio-container {
+    padding: 1.5rem;
+  }
+  
+  ::ng-deep section {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .portfolio-container {
+    padding: 1rem;
+  }
+  
+  ::ng-deep section {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .portfolio-container {
+    padding: 0.5rem;
+  }
+  
+  ::ng-deep section {
+    padding: 1rem;
+    border-radius: 4px;
+  }
+}

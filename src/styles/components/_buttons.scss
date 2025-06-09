@@ -1,0 +1,247 @@
+// Button Component Styles
+@import '../abstracts/variables';
+@import '../abstracts/mixins';
+
+// Base button styles
+.btn {
+  @include btn-base;
+
+  // Size variations
+  &.btn-sm {
+    padding: $spacing-xs $spacing-md;
+    font-size: $font-size-sm;
+  }
+
+  &.btn-lg,
+  &.btn-large {
+    padding: $spacing-md $spacing-xl;
+    font-size: $font-size-lg;
+  }
+
+  // Icon buttons
+  &.btn-icon {
+    padding: $spacing-sm;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+
+    i {
+      margin: 0;
+    }
+  }
+
+  // Full width button
+  &.btn-block {
+    width: 100%;
+  }
+  
+  // Project action buttons
+  &.project-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-xs;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all $transition-standard $transition-easing;
+    
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: $shadow-md;
+    }
+  }
+}
+
+// Button variants
+.btn-primary {
+  @include btn-primary;
+}
+
+.btn-secondary {
+  @include btn-secondary;
+}
+
+.btn-success {
+  @include btn-base;
+  background-color: $accent-success;
+  color: $white;
+  border-color: $accent-success;
+
+  &:hover:not(:disabled) {
+    background-color: darken($accent-success, 10%);
+    border-color: darken($accent-success, 10%);
+    transform: translateY(-1px);
+  }
+}
+
+.btn-warning {
+  @include btn-base;
+  background-color: $accent-warning;
+  color: $white;
+  border-color: $accent-warning;
+
+  &:hover:not(:disabled) {
+    background-color: darken($accent-warning, 10%);
+    border-color: darken($accent-warning, 10%);
+    transform: translateY(-1px);
+  }
+}
+
+.btn-danger {
+  @include btn-base;
+  background-color: $accent-error;
+  color: $white;
+  border-color: $accent-error;
+
+  &:hover:not(:disabled) {
+    background-color: darken($accent-error, 10%);
+    border-color: darken($accent-error, 10%);
+    transform: translateY(-1px);
+  }
+}
+
+// Outline button variants
+.btn-outline-primary {
+  @include btn-base;
+  background-color: transparent;
+  color: $primary-color;
+  border-color: $primary-color;
+
+  &:hover:not(:disabled) {
+    background-color: $primary-color;
+    color: $white;
+  }
+}
+
+.btn-outline-secondary {
+  @include btn-base;
+  background-color: transparent;
+  color: $secondary-color;
+  border-color: $border-color;
+
+  &:hover:not(:disabled) {
+    background-color: $secondary-color;
+    color: $white;
+    border-color: $secondary-color;
+  }
+}
+
+// Ghost button (no border)
+.btn-ghost {
+  @include btn-base;
+  background-color: transparent;
+  color: $primary-color;
+  border-color: transparent;
+
+  &:hover:not(:disabled) {
+    background-color: rgba($primary-color, 0.1);
+  }
+}
+
+// Link button (looks like a link)
+.btn-link {
+  @include btn-base;
+  background-color: transparent;
+  color: $primary-color;
+  border: none;
+  padding: 0;
+  text-decoration: underline;
+
+  &:hover:not(:disabled) {
+    color: $primary-dark;
+    text-decoration: none;
+    transform: none;
+  }
+}
+
+// Button groups
+.btn-group {
+  display: inline-flex;
+  vertical-align: middle;
+
+  .btn {
+    position: relative;
+    flex: 1 1 auto;
+    border-radius: 0;
+    margin-right: -1px;
+
+    &:first-child {
+      border-top-left-radius: $border-radius-sm;
+      border-bottom-left-radius: $border-radius-sm;
+    }
+
+    &:last-child {
+      border-top-right-radius: $border-radius-sm;
+      border-bottom-right-radius: $border-radius-sm;
+      margin-right: 0;
+    }
+
+    &:hover,
+    &:focus,
+    &.active {
+      z-index: 1;
+    }
+  }
+}
+
+// Floating action button
+.btn-fab {
+  @include btn-primary;
+  border-radius: 50%;
+  width: 3.5rem;
+  height: 3.5rem;
+  padding: 0;
+  position: fixed;
+  bottom: $spacing-xl;
+  right: $spacing-xl;
+  box-shadow: $shadow-lg;
+  z-index: 1000;
+
+  &:hover {
+    box-shadow: $shadow-xl;
+    transform: translateY(-2px);
+  }
+
+  i {
+    margin: 0;
+    font-size: $font-size-lg;
+  }
+
+  @include mobile {
+    bottom: $spacing-lg;
+    right: $spacing-lg;
+    width: 3rem;
+    height: 3rem;
+
+    i {
+      font-size: $font-size-base;
+    }
+  }
+}
+
+// Loading state
+.btn.loading {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1rem;
+    height: 1rem;
+    margin: -0.5rem 0 0 -0.5rem;
+    border: 2px solid transparent;
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

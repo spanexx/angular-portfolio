@@ -1,0 +1,176 @@
+// Card Component Styles
+@import '../abstracts/variables';
+@import '../abstracts/mixins';
+
+// Base card styles
+.card {
+  @include card;
+  
+  &.card-hover {
+    @include hover-lift;
+    cursor: pointer;
+  }
+
+  &.card-sm {
+    @include card($spacing-md);
+  }
+
+  &.card-lg {
+    @include card($spacing-xl);
+  }
+  
+  // Special project card styling
+  &.project-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    
+    &.in-progress {
+      border-left: 5px solid $accent-error;
+    }
+    
+    .card-body {
+      flex-grow: 1;
+    }
+    
+    .project-links {
+      display: flex;
+      gap: $spacing-sm;
+      margin-top: auto;
+      flex-wrap: wrap;
+      
+      .btn {
+        flex: 1;
+        text-align: center;
+        min-width: 80px;
+      }
+    }
+  }
+}
+
+// Card header
+.card-header {
+  @include flex-between;
+  margin-bottom: $spacing-md;
+  padding-bottom: $spacing-md;
+  border-bottom: 1px solid $border-color;
+
+  &:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}
+
+.card-title {
+  @include heading-4;
+  margin-bottom: 0;
+  color: $text-primary;
+}
+
+.card-subtitle {
+  @include small-text;
+  color: $text-secondary;
+  font-weight: $font-weight-medium;
+  margin-top: $spacing-xs;
+}
+
+// Card body
+.card-body {
+  flex: 1;
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Card footer
+.card-footer {
+  margin-top: $spacing-md;
+  padding-top: $spacing-md;
+  border-top: 1px solid $border-color;
+  @include flex-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+}
+
+// Card variants
+.card-primary {
+  border-color: $primary-color;
+  border-width: 2px;
+
+  .card-header {
+    background-color: rgba($primary-color, 0.05);
+    margin: (-$spacing-lg) (-$spacing-lg) $spacing-md;
+    padding: $spacing-md $spacing-lg;
+    border-bottom-color: $primary-color;
+  }
+
+  .card-title {
+    color: $primary-color;
+  }
+}
+
+// Project card specific styles
+.project-card {
+  @include card;
+  @include hover-lift;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: all $transition-standard $transition-easing;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-xl;
+  }
+}
+
+.project-status {
+  @include small-text;
+  font-weight: $font-weight-semibold;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $border-radius-sm;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  &.status-completed {
+    background-color: rgba($accent-success, 0.1);
+    color: $accent-success;
+  }
+
+  &.status-in-progress {
+    background-color: rgba($accent-warning, 0.1);
+    color: $accent-warning;
+  }
+}
+
+// Card grid layouts
+.cards-grid {
+  display: grid;
+  gap: $spacing-lg;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: $spacing-md;
+  }
+}
+
+// Card animations
+.card-fade-in {
+  @include fade-in;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

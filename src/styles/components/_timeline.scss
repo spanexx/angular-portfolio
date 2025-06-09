@@ -1,103 +1,174 @@
-/* Timeline styles */
-.timeline {
-    position: relative;
-    padding: 20px 0;
-    margin: 0 20px;
-}
+// Timeline Component Styles
+@import '../abstracts/variables';
+@import '../abstracts/mixins';
 
-.timeline::before {
+.timeline {
+  position: relative;
+  padding: $spacing-lg 0;
+
+  // Timeline line
+  &::before {
     content: '';
     position: absolute;
+    left: $spacing-lg;
     top: 0;
-    left: 50%;
+    bottom: 0;
     width: 2px;
-    height: 100%;
-    background-color: #ccc;
-    transform: translateX(-50%);
+    background: linear-gradient(
+      to bottom,
+      $primary-light 0%,
+      $primary-color 50%,
+      $primary-light 100%
+    );
+    border-radius: 1px;
+  }
+
+  @include mobile {
+    &::before {
+      left: $spacing-md;
+    }
+  }
 }
 
 .timeline-item {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 40px;
-    position: relative;
-}
+  position: relative;
+  margin-bottom: $spacing-2xl;
+  padding-left: calc(#{$spacing-lg} * 2.5);
 
-.timeline-item:nth-child(odd) {
-    flex-direction: row-reverse;
-}
+  &:last-child {
+    margin-bottom: 0;
+  }
 
-.timeline-item::before {
+  @include mobile {
+    padding-left: calc(#{$spacing-md} * 2.5);
+  }
+
+  // Timeline dot
+  &::before {
     content: '';
     position: absolute;
-    top: 10px;
-    left: 50%;
+    left: calc(#{$spacing-lg} - 6px);
+    top: $spacing-sm;
     width: 12px;
     height: 12px;
-    background-color: #007bff;
+    background-color: $primary-color;
+    border: 3px solid $white;
     border-radius: 50%;
-    transform: translateX(-50%);
-    z-index: 1;
-}
+    box-shadow: 0 0 0 2px $primary-color;
+    z-index: 2;
 
-.timeline-date {
-    width: 45%;
-    padding: 10px;
-    text-align: right;
-    font-weight: bold;
-    color: #555;
-}
+    @include mobile {
+      left: calc(#{$spacing-md} - 6px);
+    }
+  }
 
-.timeline-item:nth-child(odd) .timeline-date {
-    text-align: left;
+  // Active/current item
+  &.active {
+    &::before {
+      background-color: $accent-warning;
+      box-shadow: 0 0 0 2px $accent-warning;
+      animation: pulse 2s infinite;
+    }
+  }
+
+  // Future/upcoming item
+  &.upcoming {
+    opacity: 0.6;
+
+    &::before {
+      background-color: $border-color;
+      box-shadow: 0 0 0 2px $border-color;
+    }
+  }
 }
 
 .timeline-content {
-    width: 45%;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  @include card($spacing-lg);
+  background: $white;
+  position: relative;
+
+  // Arrow pointing to timeline
+  &::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: $spacing-lg;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid $white;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: -9px;
+    top: $spacing-lg;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid $border-color;
+    z-index: -1;
+  }
 }
 
-.timeline-content h3 {
-    margin-top: 0;
-    color: #333;
+.timeline-header {
+  @include flex-between;
+  margin-bottom: $spacing-md;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+
+  @include mobile {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
-.timeline-content p {
-    margin-bottom: 5px;
-    color: #666;
+.timeline-title {
+  @include heading-4;
+  margin-bottom: 0;
+  color: $text-primary;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .timeline::before {
-        left: 20px;
-        transform: translateX(0);
-    }
+.timeline-subtitle {
+  @include small-text;
+  color: $primary-color;
+  font-weight: $font-weight-medium;
+  margin-bottom: $spacing-xs;
+}
 
-    .timeline-item {
-        flex-direction: column !important;
-        align-items: flex-start;
-        margin-left: 20px;
-    }
+.timeline-date {
+  @include small-text;
+  color: $text-secondary;
+  font-weight: $font-weight-medium;
+  background-color: rgba($primary-color, 0.1);
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $border-radius-sm;
+  white-space: nowrap;
+}
 
-    .timeline-item::before {
-        left: 20px;
-        transform: translateX(-50%);
-    }
+.timeline-description {
+  @include body-text;
+  margin-bottom: $spacing-md;
 
-    .timeline-date,
-    .timeline-content {
-        width: 100%;
-        text-align: left !important;
-        padding-left: 40px;
-    }
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
 
-    .timeline-date {
-        margin-bottom: 10px;
-    }
+// Animations
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 2px $accent-warning, 0 0 0 4px rgba($accent-warning, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 2px $accent-warning, 0 0 0 8px rgba($accent-warning, 0.1);
+  }
+  100% {
+    box-shadow: 0 0 0 2px $accent-warning, 0 0 0 4px rgba($accent-warning, 0.3);
+  }
 }
 
 /* Certifications Grid Styles */
