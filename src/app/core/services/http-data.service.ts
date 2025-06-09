@@ -2,8 +2,8 @@ import { Injectable, inject, ErrorHandler } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
 import { catchError, tap, shareReplay } from 'rxjs/operators';
-import { LoadingService } from '../../services/loading.service';
-import { GlobalErrorHandler } from '../../services/error-handler.service';
+import { LoadingService } from '../../../services/loading.service';
+import { GlobalErrorHandler } from '../../../services/error-handler.service';
 
 const CACHE_SIZE = 1;
 

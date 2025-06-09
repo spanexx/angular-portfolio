@@ -1,0 +1,189 @@
+.sidebar {
+  width: 280px; /* Match our SCSS variable */
+  height: 100vh; /* Fixed height instead of min-height for proper scrolling */
+  background-color: #ffffff;
+  padding: 20px 16px; /* Reduced padding */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  z-index: 100;
+}
+
+/* Custom scrollbar styling for sidebar */
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: rgba(229, 231, 235, 0.1);
+  border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(37, 99, 235, 0.3);
+  border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(37, 99, 235, 0.5);
+}
+
+/* Firefox scrollbar */
+.sidebar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(37, 99, 235, 0.3) rgba(229, 231, 235, 0.1);
+}
+
+/* Remove extra margins from child components on mobile */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+    position: relative;
+    padding: 16px;
+    display: none; /* Hide on mobile, use mobile nav instead */
+  }
+}
+
+.profile-section {
+  margin-bottom: 30px;
+}
+
+.passport-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #e9ecef;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 15px;
+  overflow: hidden;
+}
+
+.photo-placeholder i {
+  font-size: 60px;
+  color: #adb5bd;
+}
+
+.name h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: #343a40;
+}
+
+.title p {
+  margin: 5px 0 0;
+  font-size: 1rem;
+  color: #6c757d;
+}
+
+.contact-section, .cv-section {
+  width: 100%;
+  margin-bottom: 20px; /* Reduced margin */
+}
+
+.contact-section h3, .cv-section h3 {
+  font-size: 1.1rem; /* Slightly smaller */
+  color: #343a40;
+  margin-bottom: 12px; /* Reduced margin */
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 8px; /* Reduced padding */
+}
+
+.contact-section ul, .cv-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.contact-section li, .cv-section li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px; /* Reduced margin */
+  color: #495057;
+  font-size: 0.9rem; /* Smaller font */
+}
+
+.contact-section li i, .cv-section li i {
+  margin-right: 8px; /* Reduced margin */
+  color: #007bff; /* Primary color for icons */
+  width: 16px; /* Fixed width for alignment */
+  flex-shrink: 0;
+}
+
+.cv-section a {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .profile-section, .contact-section, .cv-section {
+    margin-bottom: 0;
+    width: auto;
+  }
+
+  .profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .passport-photo {
+    width: 80px;
+    height: 80px;
+  }
+
+  .photo-placeholder i {
+    font-size: 40px;
+  }
+
+  .name h2 {
+    font-size: 1.4rem;
+  }
+
+  .title p {
+    font-size: 0.9rem;
+  }
+
+  .contact-section ul, .cv-section ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .contact-section li, .cv-section li {
+    margin: 5px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .contact-section ul, .cv-section ul {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -1,4 +1,55 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body { 
+  height: 100%; 
+  margin: 0; 
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scroll on mobile */
+}
+
+body { 
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+  background-color: #f9fafb;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Prevent body scroll when mobile nav is open */
+body.mobile-nav-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+/* Responsive typography */
+* {
+  box-sizing: border-box;
+}
+
+/* Prevent overflow issues globally */
+*,
+*::before,
+*::after {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Ensure all images are responsive */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Mobile-friendly touch targets */
+@media (max-width: 768px) {
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
