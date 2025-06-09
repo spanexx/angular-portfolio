@@ -1,3 +1,18 @@
-<footer>
-    <p>&copy; 2025 Victor Ahdeen Ami - Node.js & Angular Developer</p>
+<footer class="app-footer">
+  <div class="footer-content">
+    <p>&copy; {{ currentYear }} {{ profile.name }} - {{ profile.title }}</p>
+    <div class="footer-links">
+      <a [href]="'mailto:' + contactInfo.email" class="footer-link">
+        <i class="fas fa-envelope"></i>
+        Contact
+      </a>
+      <a *ngFor="let link of contactInfo.socialLinks" 
+         [href]="link.url" 
+         class="footer-link" 
+         target="_blank">
+        <i class="fab" [ngClass]="'fa-' + link.platform.toLowerCase()"></i>
+        {{ link.platform }}
+      </a>
+    </div>
+  </div>
 </footer>

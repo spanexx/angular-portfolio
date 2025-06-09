@@ -34,9 +34,11 @@ export interface Education {
    * @pattern ^(\d{4}-\d{2}|Present)$
    */
   endDate: DateString | 'Present';
-  
-  /** Description of studies */
+    /** Description of studies */
   description?: string;
+  
+  /** Location (city, country) */
+  location?: string;
   
   /** Institution image URL */
   imageUrl?: string;

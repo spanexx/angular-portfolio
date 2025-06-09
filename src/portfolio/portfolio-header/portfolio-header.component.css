@@ -10,13 +10,36 @@ header h1 {
   color: var(--text-primary, #111827);
   font-weight: 700;
   margin: 0;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  position: relative;
+  display: inline-block;
 }
 
-header h1 span {
+/* Typing cursor styles */
+.cursor {
   color: var(--primary-color, #2563eb);
   font-weight: 400;
-  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
-  font-size: 2rem;
+  animation: none;
+  transition: opacity 0.1s ease-in-out;
+}
+
+.cursor.blink {
+  opacity: 1;
+}
+
+.cursor:not(.blink) {
+  opacity: 0;
+}
+
+/* Alternative blinking animation (can be used instead of JavaScript control) */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Style for the brackets and tech stack part when typing */
+header h1:has-text("Node.js") {
+  color: var(--primary-color, #2563eb);
 }
 
 /* Responsive Design */

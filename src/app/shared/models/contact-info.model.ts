@@ -35,5 +35,5 @@ export interface ContactInfo {
   website?: string;
   
   /** Other social media links */
-  socialLinks?: SocialLink[];
+  socialLinks?: any;
 }

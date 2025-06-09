@@ -1,9 +1,47 @@
-<div class="project-card" [class.in-progress]="project.inProgress" inViewAnimation animationType="fadeIn">
-    <h3>{{ project.title }}</h3>
-    <p>{{ project.description }}</p>
-    <app-progress-bar *ngIf="project.inProgress" [progress]="displayProgress"></app-progress-bar>
-    <div class="project-links">
-        <a *ngIf="project.viewLink" (click)="onCardClick()" class="btn">View Project</a>
-        <a *ngIf="project.githubLink" [href]="project.githubLink" class="btn">GitHub</a>
-    </div>
+<div class="project-card" [class.in-progress]="project.inProgress" inViewAnimation animationType="fadeIn" (click)="onCardClick()">
+  <!-- Project Header -->
+  <div class="project-header">
+    <h3 class="project-title">{{ project.title }}</h3>
+    <span class="project-status" [class]="project.status.toLowerCase()">
+      {{ project.status }}
+    </span>
+  </div>
+
+  <!-- Project Description -->
+  <div class="project-description">
+    <p>{{ truncatedDescription }}</p>
+  </div>
+
+  <!-- Progress Bar (for in-progress projects) -->
+  <div class="project-progress" *ngIf="project.inProgress">
+    <app-progress-bar [progress]="displayProgress"></app-progress-bar>
+    <span class="progress-text">{{ displayProgress }}% Complete</span>
+  </div>
+  <!-- Technologies Preview -->
+  <div class="project-technologies" *ngIf="project.technologies && project.technologies.length > 0">
+    <span class="tech-tag" *ngFor="let tech of displayTechnologies">{{ tech }}</span>
+    <span class="tech-more" *ngIf="hasMoreTechnologies">+{{ project.technologies.length - 3 }} more</span>
+  </div>
+
+  <!-- Project Actions -->
+  <div class="project-actions">
+    <button class="btn btn-primary btn-details">
+      <i class="fas fa-info-circle"></i>
+      Details
+    </button>
+    <button 
+      *ngIf="project.viewLink" 
+      class="btn btn-secondary btn-live"
+      (click)="onViewProject(); $event.stopPropagation()">
+      <i class="fas fa-external-link-alt"></i>
+      Live
+    </button>
+    <button 
+      *ngIf="project.githubLink" 
+      class="btn btn-outline btn-github"
+      (click)="onViewGitHub(); $event.stopPropagation()">
+      <i class="fab fa-github"></i>
+      Code
+    </button>
+  </div>
 </div>

@@ -8,17 +8,24 @@
             <div class="project-info">
                 <div class="project-title-section">
                     <h3 class="project-title">{{ project.title }}</h3>
-                </div>
-                <div class="project-description">
-                    <p>{{ project.description }}</p>
+                </div>                <div class="project-description">
+                    <p>{{ truncateDescription(project.description, 20) }}</p>
                 </div>
                 <div class="project-technologies" *ngIf="project.technologies">
-                    <span class="tech-tag" *ngFor="let tech of project.technologies">{{ tech }}</span>
+                    <span class="tech-tag" *ngFor="let tech of getDisplayTechnologies(project.technologies)">{{ tech }}</span>
+                    <span class="tech-more" *ngIf="hasMoreTechnologies(project.technologies)">
+                        +{{ project.technologies.length - 3 }} more
+                    </span>
                 </div>
-            </div>
-            <div class="project-actions">
-                <a *ngIf="project.viewLink" [routerLink]="['/project', project.title]" class="btn btn-sm">View</a>
-                <a *ngIf="project.githubLink" [href]="project.githubLink" class="btn btn-sm btn-outline">GitHub</a>
+            </div>            <div class="project-actions">
+                <button 
+                    class="btn btn-sm btn-primary" 
+                    (click)="navigateToProjectDetail(project)">
+                    View Details
+                </button>
+                <a *ngIf="project.githubLink" [href]="project.githubLink" target="_blank" class="btn btn-sm btn-outline">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
             </div>
         </div>
     </div>

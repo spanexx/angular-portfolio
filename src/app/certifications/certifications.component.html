@@ -1,0 +1,52 @@
+<div class="certifications-container">
+  <div class="section-header">
+    <h1>Certifications</h1>
+    <p>Professional certifications and achievements</p>
+  </div>
+  <div class="certifications-grid" *ngIf="certifications.length > 0; else noCertifications">
+    <div class="certificate-card" *ngFor="let certification of certifications">
+      <div class="certificate-border">
+        <div class="certificate-header">
+          <div class="certificate-seal">
+            <i class="fas fa-award"></i>
+          </div>
+          <h2 class="certificate-title">Certificate of Achievement</h2>
+        </div>
+        
+        <div class="certificate-body">
+          <div class="certificate-text">
+            <p class="certificate-intro">This is to certify that</p>
+            <h3 class="certificate-recipient">Victor Chidera Ani</h3>
+            <p class="certificate-achievement">has successfully completed</p>
+            <h4 class="certification-name">{{ certification.name }}</h4>
+            <p class="certification-issuer">Issued by {{ certification.issuer }}</p>
+          </div>
+          
+          <div class="certificate-footer">
+            <div class="certificate-date">
+              <span class="date-label">Date of Completion</span>
+              <span class="date-value">{{ formatDate(certification.date) }}</span>
+            </div>
+            <div class="certificate-signature">
+              <div class="signature-line"></div>
+              <span class="signature-label">Authorized Signature</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="certificate-decoration top-left"></div>
+        <div class="certificate-decoration top-right"></div>
+        <div class="certificate-decoration bottom-left"></div>
+        <div class="certificate-decoration bottom-right"></div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noCertifications>
+    <div class="no-certifications">
+      <i class="fas fa-certificate"></i>
+      <h3>No Certifications Available</h3>
+      <p>Check back later for updates on professional certifications.</p>
+    </div>
+  </ng-template>
+</div>

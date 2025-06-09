@@ -1,3 +1,6 @@
 <header>
-    <h1>Portfolio <span>< Node.js - Angular ></span></h1>
+    <h1>
+        {{ displayedText }}
+        <span class="cursor" [class.blink]="showCursor">|</span>
+    </h1>
 </header>

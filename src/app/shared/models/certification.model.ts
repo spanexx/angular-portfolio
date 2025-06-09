@@ -18,6 +18,8 @@ export interface Certification {
   
   /** Issuing organization */
   issuer: string;
+
+  description?: string;
   
   /**
    * Date of certification in YYYY-MM-DD format

@@ -1,0 +1,164 @@
+<div class="project-detail-container" *ngIf="project; else notFound">
+  <!-- Breadcrumb Navigation -->
+  <nav class="breadcrumb">
+    <button class="back-btn" (click)="goBack()">
+      <i class="fas fa-arrow-left"></i>
+      Back to Projects
+    </button>
+  </nav>
+
+  <!-- Project Hero Section -->
+  <div class="project-hero">
+    <div class="project-image" *ngIf="project.imageUrl">
+      <img [src]="project.imageUrl" [alt]="project.title" />
+    </div>
+    <div class="project-hero-content">
+      <div class="project-status-badge" [class]="project.status.toLowerCase()">
+        {{ project.status }}
+      </div>
+      <h1 class="project-title">{{ project.title }}</h1>
+      <p class="project-summary">{{ project.description }}</p>
+      
+      <!-- Action Buttons -->
+      <div class="project-actions">
+        <button 
+          *ngIf="project.viewLink" 
+          class="btn btn-primary"
+          (click)="openExternalLink(project.viewLink)">
+          <i class="fas fa-external-link-alt"></i>
+          View Live Project
+        </button>
+        <button 
+          *ngIf="project.githubLink" 
+          class="btn btn-secondary"
+          (click)="openExternalLink(project.githubLink)">
+          <i class="fab fa-github"></i>
+          View Code
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project Progress (for in-progress projects) -->
+  <div class="project-progress-section" *ngIf="project.inProgress && project.progress">
+    <h3>Project Progress</h3>
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="project.progress"></div>
+      </div>
+      <span class="progress-text">{{ project.progress }}% Complete</span>
+    </div>  </div>
+
+  <!-- Project Videos Section -->
+  <div class="videos-section" *ngIf="project.youtubeVideos && project.youtubeVideos.length > 0">
+    <h3>Project Videos</h3>
+    <div class="videos-grid">
+      <div class="video-card" *ngFor="let video of project.youtubeVideos">        <div class="video-wrapper">
+          <iframe 
+            [src]="getYouTubeEmbedUrl(video.url)" 
+            [title]="video.title"
+            frameborder="0" 
+            allowfullscreen
+            loading="lazy"
+            (error)="onVideoError($event)">
+          </iframe>
+        </div>
+        <div class="video-info">
+          <h4 class="video-title">{{ video.title }}</h4>
+          <span class="video-type" [class]="'type-' + video.type">{{ getVideoTypeDisplay(video.type) }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project Images Section -->
+  <div class="images-section" *ngIf="project.githubImages && project.githubImages.length > 0">
+    <h3>Project Screenshots</h3>
+    <div class="images-grid">
+      <div class="image-card" *ngFor="let image of project.githubImages" (click)="openImageModal(image)">
+        <div class="image-wrapper">
+          <img 
+            [src]="image.url" 
+            [alt]="image.alt"
+            loading="lazy"
+            (error)="onImageError($event)"
+            class="project-image">
+          <div class="image-overlay">
+            <i class="fas fa-expand-alt"></i>
+          </div>
+        </div>
+        <div class="image-info">
+          <h4 class="image-caption">{{ image.caption || image.alt }}</h4>
+          <span class="image-type" [class]="'type-' + image.type">{{ getImageTypeDisplay(image.type) }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Technologies Used -->
+  <div class="technologies-section" *ngIf="project.technologies && project.technologies.length > 0">
+    <h3>Technologies Used</h3>
+    <div class="technologies-grid">
+      <span class="tech-tag" *ngFor="let tech of project.technologies">
+        {{ tech }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Project Features -->
+  <div class="features-section" *ngIf="project.features && project.features.length > 0">
+    <h3>Key Features</h3>
+    <ul class="features-list">
+      <li *ngFor="let feature of project.features" class="feature-item">
+        <i class="fas fa-check-circle"></i>
+        {{ feature }}
+      </li>
+    </ul>
+  </div>
+
+  <!-- Project Links -->
+  <div class="links-section">
+    <h3>Project Links</h3>
+    <div class="links-grid">
+      <a 
+        *ngIf="project.projectUrl" 
+        [href]="project.projectUrl" 
+        target="_blank" 
+        class="link-card">
+        <i class="fas fa-globe"></i>
+        <span>Project Website</span>
+      </a>
+      <a 
+        *ngIf="project.githubLink" 
+        [href]="project.githubLink" 
+        target="_blank" 
+        class="link-card">
+        <i class="fab fa-github"></i>
+        <span>Source Code</span>
+      </a>
+      <a 
+        *ngIf="project.viewLink" 
+        [href]="project.viewLink" 
+        target="_blank" 
+        class="link-card">
+        <i class="fas fa-external-link-alt"></i>
+        <span>Live Demo</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Project Not Found Template -->
+<ng-template #notFound>
+  <div class="not-found">
+    <div class="not-found-content">
+      <i class="fas fa-exclamation-triangle"></i>
+      <h2>Project Not Found</h2>
+      <p>The project you're looking for doesn't exist or has been moved.</p>
+      <button class="btn btn-primary" (click)="goBack()">
+        <i class="fas fa-arrow-left"></i>
+        Go Back
+      </button>
+    </div>
+  </div>
+</ng-template>

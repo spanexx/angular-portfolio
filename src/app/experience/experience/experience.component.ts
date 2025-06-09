@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { TimelineComponent } from '../../components/timeline/timeline/timeline.component';
+import { Experience } from '../../shared/models';
+import { MockDataService } from '../../core/services/mock-data.service';
 
 @Component({
   selector: 'app-experience',
@@ -8,25 +10,38 @@ import { TimelineComponent } from '../../components/timeline/timeline/timeline.c
   templateUrl: './experience.component.html',
   styleUrl: './experience.component.css'
 })
-export class ExperienceComponent {
-  experienceItems = [
-    {
-      date: '2022 - Present',
-      title: 'Senior Frontend Developer',
-      subtitle: 'Company Name',
-      description: 'Developing and maintaining Angular applications, implementing responsive designs, and collaborating with backend developers.'
-    },
-    {
-      date: '2020 - 2022',
-      title: 'Full Stack Developer',
-      subtitle: 'Company Name',
-      description: 'Worked on Node.js backend services and Angular frontend applications, participated in the full development lifecycle.'
-    },
-    {
-      date: '2018 - 2020',
-      title: 'Junior Web Developer',
-      subtitle: 'Company Name',
-      description: 'Assisted in developing web applications using JavaScript frameworks and contributed to UI/UX improvements.'
-    }
-  ];
+export class ExperienceComponent implements OnInit {
+  experiences: Experience[] = [];
+  experienceItems: any[] = [];
+  
+  private mockDataService = inject(MockDataService);
+
+  ngOnInit(): void {
+    this.experiences = this.mockDataService.getExperiences();
+    this.experienceItems = this.transformExperiencesToTimelineItems();
+  }
+
+  private transformExperiencesToTimelineItems(): any[] {
+    return this.experiences.map(experience => ({
+      date: this.formatDateRange(experience.startDate, experience.endDate),
+      title: experience.role,
+      subtitle: experience.company,
+      description: this.formatResponsibilities(experience.responsibilities)
+    }));
+  }
+
+  private formatDateRange(startDate: string, endDate: string | undefined): string {
+    const formatYear = (date: string) => {
+      return new Date(date).getFullYear().toString();
+    };
+
+    const start = formatYear(startDate);
+    const end = endDate ? formatYear(endDate) : 'Present';
+    
+    return start === end ? start : `${start} - ${end}`;
+  }
+
+  private formatResponsibilities(responsibilities: string[]): string {
+    return responsibilities.slice(0, 3).join('. ') + (responsibilities.length > 3 ? '...' : '.');
+  }
 }

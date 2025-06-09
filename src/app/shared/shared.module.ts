@@ -28,10 +28,10 @@ import { FooterComponent } from '../footer/footer.component';
     MatCardModule,
     MatButtonModule,
     MatIconModule,
-    AppShellComponent,
-    HeaderComponent,
-    SidebarComponent,
-    FooterComponent
+    // AppShellComponent,
+    // HeaderComponent,
+    // SidebarComponent,
+    // FooterComponent
   ]
 })
 export class SharedModule { }
