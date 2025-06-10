@@ -30,11 +30,20 @@ export class WhatsappFloatComponent implements OnInit {
     const message = encodeURIComponent('Hello! I found your portfolio and would like to get in touch.');
     return `https://wa.me/${cleanedPhone}?text=${message}`;
   }
-
-  openWhatsApp(): void {
+  openWhatsApp(event?: Event): void {
+    // Prevent event bubbling and default behavior
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+    }
+    
     const url = this.getWhatsAppUrl();
     if (url !== '#') {
-      window.open(url, '_blank');
+      // Use setTimeout to prevent any animation conflicts
+      setTimeout(() => {
+        window.open(url, '_blank');
+      }, 0);
     }
   }
 

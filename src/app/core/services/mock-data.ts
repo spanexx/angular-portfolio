@@ -63,9 +63,10 @@ export const mockCompletedProjects: Project[] = [
     id: 'banking-system',
     title: 'Banking Management System',
     status: ProjectStatus.Completed,
+    imageUrl: 'https://raw.githubusercontent.com/spanexx/My-image-host/067c4954d7c4a63dd0afa7c2f8874fa61b69d985/simp.jpg',
     description: 'A comprehensive banking system with account management, transaction processing, loan management, and admin dashboard. Features secure authentication, real-time balance updates, and detailed transaction history.',
-    technologies: ['Node.js', 'Express.js', 'MongoDB', 'Angular', 'TypeScript', 'JWT', 'Socket.io', 'Bootstrap'],    imageUrl: '/assets/projects/banking-system.png',
-    projectUrl: 'https://banking-system-demo.herokuapp.com',
+    technologies: ['Node.js', 'Express.js', 'MongoDB', 'Angular', 'TypeScript', 'JWT', 'Socket.io', 'Bootstrap'],   
+    projectUrl: 'https://banking-api-cdtx.onrender.com',
     viewLink: 'https://banking.spanexx.com',
     githubLink: 'https://github.com/spanexx/banking-system',
     features: [
@@ -78,26 +79,26 @@ export const mockCompletedProjects: Project[] = [
       'Transaction history and reporting'
     ],    youtubeVideos: [
       {
-        url: 'https://youtu.be/hRoAvmcHsow?si=OSAsXWFFoHGg_se_',
+        url: 'https://youtu.be/iIhW2gDHoQ4?si=r7mTg4GSMrcoOfUC',
         title: 'Banking System Demo - Full Walkthrough',
         type: 'demo'
       }
     ],
     githubImages: [
       {
-        url: 'https://raw.githubusercontent.com/spanexx/banking-system/main/screenshots/dashboard.png',
+        url: 'https://raw.githubusercontent.com/spanexx/My-image-host/2e8103821b3c1665bcc0f4a1ce6746081d31bc78/Screenshot%202025-06-10%20071738.png',
         alt: 'Banking System Dashboard',
         caption: 'Main dashboard showing account overview',
         type: 'screenshot'
       },
       {
-        url: 'https://raw.githubusercontent.com/spanexx/banking-system/main/screenshots/transactions.png',
+        url: 'https://raw.githubusercontent.com/spanexx/My-image-host/fdd718554d6981f9f0468f87c8e098e2d2f1349d/Screenshot%202025-06-10%20100928.png',
         alt: 'Transaction History',
         caption: 'Transaction history with filtering options',
         type: 'ui'
       },
       {
-        url: 'https://raw.githubusercontent.com/spanexx/banking-system/main/architecture/system-diagram.png',
+        url: 'https://raw.githubusercontent.com/spanexx/My-image-host/47703a6127c01c8d068176accb7c48f7c4de9230/Screenshot%202025-06-10%20101924.png',
         alt: 'System Architecture',
         caption: 'Overall system architecture and data flow',
         type: 'architecture'
@@ -106,7 +107,7 @@ export const mockCompletedProjects: Project[] = [
   },
   {
     id: 'vesta-platform',
-    title: 'Vesta - Professional Adult Dating Platform',
+    title: 'Vesta - Professional Adult Dating Platform (For Educational Purposes Only)',
     status: ProjectStatus.Completed,
   description: 'A full-stack adult dating and escort platform built with Angular 18 and Node.js. Features comprehensive user management, geolocation-based search, multi-tier subscription system, video content, payment processing with Stripe and crypto, real-time messaging, admin dashboard with content moderation, and performance-optimized virtual scrolling. Includes identity verification, automated deployment with PM2 clustering, and enterprise-grade security.',
   technologies: [
@@ -132,7 +133,7 @@ export const mockCompletedProjects: Project[] = [
     'Progressive Loading',
     'Render Hosting'
   ],
-  imageUrl: '/assets/projects/vesta-platform.jpg',
+  imageUrl: 'https://raw.githubusercontent.com/spanexx/My-image-host/ea29da53a054df351bffa14e6b1bcc1abdcc5924/VestaGirls.png',
   projectUrl: 'https://vesta-btp1.onrender.com',
   viewLink: 'https://vestagirls.online',
   githubLink: 'https://github.com/spanexx/Vesta',
@@ -152,32 +153,32 @@ export const mockCompletedProjects: Project[] = [
     'Production deployment with PM2 clustering'
   ],  youtubeVideos: [
     {
-      url: 'https://youtu.be/hRoAvmcHsow?si=OSAsXWFFoHGg_se_',
+      url: 'https://youtu.be/ORKOjsMegGg?si=bNs8N9qNIvaMt2rQ',
       title: 'Vesta Platform Demo - User Experience',
       type: 'demo'
     }
   ],
   githubImages: [
     {
-      url: 'https://raw.githubusercontent.com/spanexx/Vesta/main/screenshots/homepage.png',
+      url: 'https://raw.githubusercontent.com/spanexx/My-image-host/7d8fb2d7d068420423db1ad3bcd7716377b2a29f/Screenshot%202025-06-10%20112209.png',
       alt: 'Vesta Homepage',
       caption: 'Landing page with user discovery features',
       type: 'screenshot'
     },
     {
-      url: 'https://raw.githubusercontent.com/spanexx/Vesta/main/screenshots/profile-page.png',
+      url: 'https://raw.githubusercontent.com/spanexx/My-image-host/7d8fb2d7d068420423db1ad3bcd7716377b2a29f/Screenshot%202025-06-10%20112734.png',
       alt: 'User Profile Page',
       caption: 'Detailed user profile with verification status',
       type: 'ui'
     },
     {
-      url: 'https://raw.githubusercontent.com/spanexx/Vesta/main/screenshots/admin-dashboard.png',
+      url: 'https://raw.githubusercontent.com/spanexx/My-image-host/ea29da53a054df351bffa14e6b1bcc1abdcc5924/Screenshot%202025-06-10%20120344.png',
       alt: 'Admin Dashboard',
       caption: 'Content moderation and user management',
       type: 'screenshot'
     },
     {
-      url: 'https://raw.githubusercontent.com/spanexx/Vesta/main/architecture/system-flow.png',
+      url: 'https://raw.githubusercontent.com/spanexx/My-image-host/80b51a9cde5bd459fe8e9a1e7cb1cf857edc385f/Screenshot%202025-06-10%20122519.png',
       alt: 'System Architecture',
       caption: 'Application architecture and data flow',
       type: 'architecture'
