@@ -5,17 +5,15 @@
      (mouseleave)="onMouseLeave()"
      (click)="openWhatsApp($event)"
      title="Chat with me on WhatsApp">
-    
-  <!-- WhatsApp Icon -->
+      <!-- WhatsApp Icon -->
   <div class="whatsapp-icon">
-    <img src="assets/whatsapp.png" alt="WhatsApp" class="whatsapp-img">
+    <img src="assets/whatsapp.png" alt="WhatsApp" class="whatsapp-img" width="32" height="32">
   </div>
   
   <!-- Message tooltip that appears on hover -->
   <div class="whatsapp-tooltip" [class.show]="isHovered">
-    <div class="tooltip-content">
-      <div class="tooltip-header">
-        <img src="assets/whatsapp.png" alt="WhatsApp" class="tooltip-whatsapp-icon">
+    <div class="tooltip-content">      <div class="tooltip-header">
+        <img src="assets/whatsapp.png" alt="WhatsApp" class="tooltip-whatsapp-icon" width="20" height="20">
         <span>Start a conversation</span>
       </div>
       <div class="tooltip-message">

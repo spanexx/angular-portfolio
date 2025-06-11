@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../../environment';
 
 export interface GitHubRepo {
@@ -21,15 +21,42 @@ export interface GitHubCommit {
   repository_url?: string;
 }
 
+interface CachedData {
+  commits: GitHubCommit[];
+  timestamp: number;
+  username: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class GithubApiService {
   private readonly baseUrl = environment.githubApiUrl;
+  private readonly CACHE_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
+  private readonly CACHE_KEY = 'github_commits_cache';
+  
+  private commitsSubject = new BehaviorSubject<GitHubCommit[]>([]);
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+  private errorSubject = new BehaviorSubject<string | null>(null);
+  
+  public commits$ = this.commitsSubject.asObservable();
+  public loading$ = this.loadingSubject.asObservable();
+  public error$ = this.errorSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
-
+  constructor(private http: HttpClient) {
+    this.loadFromCache();
+  }
   async fetchCommits(username: string, token: string | null = null): Promise<GitHubCommit[]> {
+    // Check if we have cached data that's still valid
+    const cachedData = this.getValidCachedData(username);
+    if (cachedData) {
+      this.commitsSubject.next(cachedData.commits);
+      return cachedData.commits;
+    }
+
+    this.loadingSubject.next(true);
+    this.errorSubject.next(null);
+
     try {
       const headers = this.buildHeaders(token);
 
@@ -64,17 +91,95 @@ export class GithubApiService {
         new Date(b.commit.author.date).getTime() - new Date(a.commit.author.date).getTime()
       );
 
-      return commits.slice(0, 20); // Return latest 20 commits
+      const finalCommits = commits.slice(0, 20); // Return latest 20 commits
+      
+      // Cache the results
+      this.cacheData(username, finalCommits);
+      this.commitsSubject.next(finalCommits);
+      
+      return finalCommits;
     } catch (error: any) {
       console.error('Error fetching commits:', error);
-      throw new Error(this.formatErrorMessage(error));
+      const errorMessage = this.formatErrorMessage(error);
+      this.errorSubject.next(errorMessage);
+      throw new Error(errorMessage);
+    } finally {
+      this.loadingSubject.next(false);
     }
   }
 
+  // Method to get cached commits without making API call
+  getCachedCommits(username: string): GitHubCommit[] | null {
+    const cachedData = this.getValidCachedData(username);
+    if (cachedData) {
+      this.commitsSubject.next(cachedData.commits);
+      return cachedData.commits;
+    }
+    return null;
+  }
+
+  // Method to refresh data in background
+  async refreshInBackground(username: string, token: string | null = null): Promise<void> {
+    try {
+      await this.fetchCommits(username, token);
+    } catch (error) {
+      console.warn('Background refresh failed:', error);
+    }
+  }
+
+  // Check if cache needs refresh
+  shouldRefresh(username: string): boolean {
+    return !this.getValidCachedData(username);
+  }
+
+  private loadFromCache(): void {
+    try {
+      const cached = localStorage.getItem(this.CACHE_KEY);
+      if (cached) {
+        const data: CachedData = JSON.parse(cached);
+        if (this.isCacheValid(data)) {
+          this.commitsSubject.next(data.commits);
+        }
+      }
+    } catch (error) {
+      console.warn('Failed to load from cache:', error);
+    }
+  }
+
+  private cacheData(username: string, commits: GitHubCommit[]): void {
+    try {
+      const data: CachedData = {
+        commits,
+        timestamp: Date.now(),
+        username
+      };
+      localStorage.setItem(this.CACHE_KEY, JSON.stringify(data));
+    } catch (error) {
+      console.warn('Failed to cache data:', error);
+    }
+  }
+
+  private getValidCachedData(username: string): CachedData | null {
+    try {
+      const cached = localStorage.getItem(this.CACHE_KEY);
+      if (cached) {
+        const data: CachedData = JSON.parse(cached);
+        if (data.username === username && this.isCacheValid(data)) {
+          return data;
+        }
+      }
+    } catch (error) {
+      console.warn('Failed to get cached data:', error);
+    }
+    return null;
+  }
+
+  private isCacheValid(data: CachedData): boolean {
+    return (Date.now() - data.timestamp) < this.CACHE_DURATION;
+  }
   private buildHeaders(token: string | null): HttpHeaders {
     let headers = new HttpHeaders({
-      'Accept': 'application/vnd.github.v3+json',
-      'User-Agent': 'GitHub-Activity-Tracker'
+      'Accept': 'application/vnd.github.v3+json'
     });
 
     if (token) {
