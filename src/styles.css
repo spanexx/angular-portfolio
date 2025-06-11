@@ -53,3 +53,21 @@ html {
     min-width: 44px;
   }
 }
+
+/* Project Card CSS Variables */
+:root {
+  --card-bg: #1a1a1a;
+  --tech-bg: #2a2a2a;
+  --text-secondary: #b0b0b0;
+  --bg-primary: #1a1a1a;
+  --accent-primary: #00ff88;
+}
+
+/* Light theme overrides */
+[data-theme="light"] {
+  --card-bg: #ffffff;
+  --tech-bg: #f8f9fa;
+  --text-secondary: #6c757d;
+  --bg-primary: #ffffff;
+  --accent-primary: #00cc6a;
+}

@@ -7,7 +7,7 @@ import { WhatsappFloatComponent } from './components/whatsapp-float/whatsapp-flo
   standalone: true,
   imports: [AppShellComponent, WhatsappFloatComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls:[ './app.component.scss' ]
 })
 export class AppComponent {
   title = 'angular-portfolio';

@@ -1,11 +1,7 @@
 <div class="portfolio-container">
   <app-portfolio-header></app-portfolio-header>
 
-  <app-completed-projects>
-      <app-project-card *ngFor="let project of completedProjects" [project]="project"></app-project-card>
-  </app-completed-projects>
+  <app-completed-projects></app-completed-projects>
 
-  <app-projects-in-progress>
-      <app-project-card *ngFor="let project of projectsInProgress" [project]="project"></app-project-card>
-  </app-projects-in-progress>
+  <app-projects-in-progress></app-projects-in-progress>
 </div>

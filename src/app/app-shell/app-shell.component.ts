@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { WhatsappFloatComponent } from '../components/whatsapp-float/whatsapp-float.component';
 
 @Component({
   selector: 'app-app-shell',
@@ -19,7 +20,7 @@ import { MatIconModule } from '@angular/material/icon';
     RouterModule,
     MatCardModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
   ],
   templateUrl: './app-shell.component.html',
   styleUrl: './app-shell.component.css'

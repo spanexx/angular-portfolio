@@ -214,11 +214,11 @@ export const mockProjectsInProgress: Project[] = [
       'ESLint',
       'Prettier'
     ],
-    imageUrl: '/assets/projects/finance-dashboard.jpg',
+    // imageUrl: '/assets/projects/finance-dashboard.jpg',
     projectUrl: 'https://finance-dashboard-demo.onrender.com',
     inProgress: true,
     progress: 95,
-    githubLink: 'https://github.com/spanexx/personal-finance-dashboard',
+    githubLink: 'https://github.com/spanexx/myPortfolio/tree/feature/personal-finance-dashboard',
     features: [
       'Complete transaction management with CRUD operations',
       'Advanced budget tracking with category allocations',
@@ -236,38 +236,33 @@ export const mockProjectsInProgress: Project[] = [
       'Performance optimization and caching',
       'Professional email templates and notifications'
     ],
-    youtubeVideos: [
-      {
-        url: 'https://youtu.be/hRoAvmcHsow?si=OSAsXWFFoHGg_se_', // Replace with actual YouTube video ID
-        title: 'Personal Finance Dashboard Overview',
-        type: 'overview'
-      },
-      {
-        url: 'https://youtu.be/se7n11glWxA?si=Zbe72OLju-DK8snm', // Replace with actual YouTube video ID
-        title: 'Budget Tracking Features',
-        type: 'feature'
-      }
-    ],
-    githubImages: [
-      {
-        url: 'https://raw.githubusercontent.com/spanexx/personal-finance-dashboard/main/screenshots/dashboard.png',
-        alt: 'Finance Dashboard',
-        caption: 'Main dashboard with financial overview',
-        type: 'screenshot'
-      },
-      {
-        url: 'https://raw.githubusercontent.com/spanexx/personal-finance-dashboard/main/screenshots/budget-tracking.png',
-        alt: 'Budget Tracking',
-        caption: 'Budget allocation and tracking interface',
-        type: 'ui'
-      },
-      {
-        url: 'https://raw.githubusercontent.com/spanexx/personal-finance-dashboard/main/screenshots/analytics.png',
-        alt: 'Financial Analytics',
-        caption: 'Chart.js visualizations for financial data',
-        type: 'result'
-      }
-    ]
+    // youtubeVideos: [
+    //   {
+    //     url: '', // Replace with actual YouTube video ID
+    //     title: 'Personal Finance Dashboard Overview',
+    //     type: 'overview'
+    //   }
+    // ],
+    // githubImages: [
+    //   {
+    //     url: 'https://raw.githubusercontent.com/spanexx/personal-finance-dashboard/main/screenshots/dashboard.png',
+    //     alt: 'Finance Dashboard',
+    //     caption: 'Main dashboard with financial overview',
+    //     type: 'screenshot'
+    //   },
+    //   {
+    //     url: 'https://raw.githubusercontent.com/spanexx/personal-finance-dashboard/main/screenshots/budget-tracking.png',
+    //     alt: 'Budget Tracking',
+    //     caption: 'Budget allocation and tracking interface',
+    //     type: 'ui'
+    //   },
+    //   {
+    //     url: 'https://raw.githubusercontent.com/spanexx/personal-finance-dashboard/main/screenshots/analytics.png',
+    //     alt: 'Financial Analytics',
+    //     caption: 'Chart.js visualizations for financial data',
+    //     type: 'result'
+    //   }
+    // ]
   },
   {
     id: 'advanced-authentication-service',
@@ -289,7 +284,7 @@ export const mockProjectsInProgress: Project[] = [
       'Mongoose',
       'Render Hosting'
     ],
-    imageUrl: '',
+    // imageUrl: '',
     projectUrl: 'https://auth-service-5971.onrender.com',
     inProgress: true,
     progress: 85,
@@ -330,7 +325,7 @@ export const mockProjectsInProgress: Project[] = [
       'Mongoose',
       'bcryptjs'
     ],
-    imageUrl: '/assets/projects/kolocollect-platform.jpg',
+    // imageUrl: '/assets/projects/kolocollect-platform.jpg',
     projectUrl: 'https://kolocollect-demo.onrender.com',
     inProgress: true,
     progress: 75,
@@ -354,7 +349,7 @@ export const mockProjectsInProgress: Project[] = [
 
 export const mockEducations: Education[] = [
   {
-    institution: 'Cyprus University',
+    institution: 'Internapa College/University',
     degree: 'MBA',
     fieldOfStudy: 'Business Administration',    startDate: '2023-09-01',
     endDate: 'Present',
@@ -362,7 +357,7 @@ export const mockEducations: Education[] = [
     location: 'Cyprus'
   },
   {
-    institution: 'Internapa College',
+    institution: 'Internapa College/University',
     degree: 'Bachelor of Arts',
     fieldOfStudy: 'Hospitality Management',    startDate: '2019-09-01',
     endDate: '2023-06-30',

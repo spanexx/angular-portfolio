@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { ProgressBarComponent } from '../../app/components/progress-bar/progress-bar.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -12,7 +12,8 @@ import { Project } from '../../app/shared/models';
   standalone: true,
   imports: [CommonModule, ProgressBarComponent, FormsModule],
   templateUrl: './project-card.component.html',
-  styleUrl: './project-card.component.css'
+  styleUrl: './project-card.component.css',
+  encapsulation: ViewEncapsulation.None
 })
 export class ProjectCardComponent {
   @Input() project!: Project;

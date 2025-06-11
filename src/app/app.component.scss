@@ -1,0 +1,10 @@
+app-whatsapp-float {
+    position: relative;
+    z-index: 100000;
+    pointer-events: none;
+    
+    // Allow pointer events to pass through to the component inside
+    > * {
+        pointer-events: auto;
+    }
+}

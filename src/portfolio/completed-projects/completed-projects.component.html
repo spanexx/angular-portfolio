@@ -1,35 +1,63 @@
 <section id="completed-projects">
     <h2>Completed Projects</h2>
-    <div class="projects-list">
-        <div class="project-list-item"
-                     *ngFor="let project of completedProjects"
-                     (click)="handleCardClick(project)"
-                     inViewAnimation animationType="fadeIn">
-            <div class="project-info">
-                <div class="project-title-section">
-                    <h3 class="project-title">{{ project.title }}</h3>
-                </div>                <div class="project-description">
-                    <p>{{ truncateDescription(project.description, 20) }}</p>
+    <div class="projects-grid">
+        <div class="completed-project-card"
+             *ngFor="let project of completedProjects"
+             (click)="handleCardClick(project)"
+             inViewAnimation animationType="fadeIn">
+            
+            <!-- Project Title Header -->
+            <div class="project-header">
+                <h3 class="project-title">{{ project.title }}</h3>
+            </div>
+            
+            <!-- Project Content -->
+            <div class="project-body">
+                <!-- Status Badge for mobile -->
+                <div class="project-status-mobile">
+                    <span class="status-badge completed">Completed</span>
                 </div>
+                  <!-- Description -->
+                <div class="project-description">
+                    <p>{{ truncateDescription(project.description) }}</p>
+                </div>
+                
+                <!-- Technologies -->
                 <div class="project-technologies" *ngIf="project.technologies">
                     <span class="tech-tag" *ngFor="let tech of getDisplayTechnologies(project.technologies)">{{ tech }}</span>
                     <span class="tech-more" *ngIf="hasMoreTechnologies(project.technologies)">
                         +{{ project.technologies.length - 3 }} more
                     </span>
                 </div>
-            </div>            <div class="project-actions">
-                <button 
-                    class="btn btn-sm btn-primary" 
-                    (click)="navigateToProjectDetail(project)">
-                    View Details
-                </button>
-                <a *ngIf="project.githubLink" [href]="project.githubLink" target="_blank" class="btn btn-sm btn-outline">
-                    <i class="fab fa-github"></i> GitHub
-                </a>
+                
+                <!-- Action Buttons -->
+                <!-- <div class="project-actions"> -->
+                    <!-- <button class="btn btn-primary" 
+                            (click)="navigateToProjectDetail(project); $event.stopPropagation()">
+                        <i class="fas fa-info-circle"></i>
+                        Details
+                    </button> -->
+                    <!-- <a *ngIf="project.viewLink" 
+                       [href]="project.viewLink" 
+                       target="_blank" 
+                       class="btn btn-secondary"
+                       (click)="$event.stopPropagation()">
+                        <i class="fas fa-external-link-alt"></i>
+                        Live
+                    </a>
+                    <a *ngIf="project.githubLink" 
+                       [href]="project.githubLink" 
+                       target="_blank" 
+                       class="btn btn-outline"
+                       (click)="$event.stopPropagation()">
+                        <i class="fab fa-github"></i>
+                        Code
+                    </a> -->
+                <!-- </div> -->
             </div>
         </div>
     </div>
     <div class="see-more">
-        <a href="#projects-page" class="btn btn-large">See more projects</a>
+        <a href="https://github.com/spanexx/" class="btn btn-large">See more projects</a>
     </div>
 </section>

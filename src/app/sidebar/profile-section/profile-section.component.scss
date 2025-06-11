@@ -5,8 +5,9 @@
 .profile-section {
   text-align: center;
   margin-bottom: $spacing-2xl;
-  padding-bottom: $spacing-xl;
+  padding-bottom: $spacing-lg;
   border-bottom: 1px solid $border-color;
+  background: whitesmoke;
 
   @include mobile {
     margin-bottom: $spacing-lg;

@@ -34,8 +34,7 @@ export class CompletedProjectsComponent implements OnInit {
     if (project.id) {
       this.router.navigate(['/portfolio/project', project.id]);
     }
-  }
-  truncateDescription(description: string, maxLength: number = 20): string {
+  }  truncateDescription(description: string, maxLength: number = 25): string {
     return description.length > maxLength 
       ? description.substring(0, maxLength) + '...' 
       : description;

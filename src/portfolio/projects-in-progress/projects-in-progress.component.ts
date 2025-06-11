@@ -39,8 +39,7 @@ export class ProjectsInProgressComponent implements OnInit {
 
   getProjectProgress(project: Project): number {
     return project.progress || 0;
-  }
-  truncateDescription(description: string, maxLength: number = 20): string {
+  }  truncateDescription(description: string, maxLength: number = 25): string {
     return description.length > maxLength 
       ? description.substring(0, maxLength) + '...' 
       : description;

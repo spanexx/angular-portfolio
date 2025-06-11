@@ -1,47 +1,62 @@
 <div class="project-card" [class.in-progress]="project.inProgress" inViewAnimation animationType="fadeIn" (click)="onCardClick()">
-  <!-- Project Header -->
-  <div class="project-header">
+  <!-- Project Title Section -->
+  <div class="project-title-section">
     <h3 class="project-title">{{ project.title }}</h3>
-    <span class="project-status" [class]="project.status.toLowerCase()">
-      {{ project.status }}
-    </span>
   </div>
 
-  <!-- Project Description -->
-  <div class="project-description">
-    <p>{{ truncatedDescription }}</p>
-  </div>
+  <!-- Main Content Area - Different layout for desktop/mobile -->
+  <div class="project-content">
+    <!-- Status Badge (mobile only) -->
+    <div class="project-status-mobile">
+      <span class="project-status" [class]="project.status.toLowerCase()">
+        {{ project.status }}
+      </span>
+    </div>
 
-  <!-- Progress Bar (for in-progress projects) -->
-  <div class="project-progress" *ngIf="project.inProgress">
-    <app-progress-bar [progress]="displayProgress"></app-progress-bar>
-    <span class="progress-text">{{ displayProgress }}% Complete</span>
-  </div>
-  <!-- Technologies Preview -->
-  <div class="project-technologies" *ngIf="project.technologies && project.technologies.length > 0">
-    <span class="tech-tag" *ngFor="let tech of displayTechnologies">{{ tech }}</span>
-    <span class="tech-more" *ngIf="hasMoreTechnologies">+{{ project.technologies.length - 3 }} more</span>
-  </div>
+    <!-- Progress Bar (for in-progress projects) -->
+    <div class="project-progress" *ngIf="project.inProgress">
+      <app-progress-bar [progress]="displayProgress"></app-progress-bar>
+      <span class="progress-text">{{ displayProgress }}% Complete</span>
+    </div>
 
-  <!-- Project Actions -->
-  <div class="project-actions">
-    <button class="btn btn-primary btn-details">
-      <i class="fas fa-info-circle"></i>
-      Details
-    </button>
-    <button 
-      *ngIf="project.viewLink" 
-      class="btn btn-secondary btn-live"
-      (click)="onViewProject(); $event.stopPropagation()">
-      <i class="fas fa-external-link-alt"></i>
-      Live
-    </button>
-    <button 
-      *ngIf="project.githubLink" 
-      class="btn btn-outline btn-github"
-      (click)="onViewGitHub(); $event.stopPropagation()">
-      <i class="fab fa-github"></i>
-      Code
-    </button>
+    <!-- Content Grid (description, tech, actions) -->
+    <div class="content-grid">
+      <!-- Description Column -->
+      <div class="description-section">
+        <p class="project-description">{{ truncatedDescription }}</p>
+      </div>
+
+      <!-- Technologies Column -->
+      <div class="technologies-section" *ngIf="project.technologies && project.technologies.length > 0">
+        <div class="tech-tags">
+          <span class="tech-tag" *ngFor="let tech of displayTechnologies">{{ tech }}</span>
+          <span class="tech-more" *ngIf="hasMoreTechnologies">+{{ project.technologies.length - 3 }} more</span>
+        </div>
+      </div>
+
+      <!-- Actions Column -->
+      <div class="actions-section">
+        <div class="project-actions">
+          <button class="btn btn-primary btn-details">
+            <i class="fas fa-info-circle"></i>
+            Details
+          </button>
+          <button 
+            *ngIf="project.viewLink" 
+            class="btn btn-secondary btn-live"
+            (click)="onViewProject(); $event.stopPropagation()">
+            <i class="fas fa-external-link-alt"></i>
+            Live
+          </button>
+          <button 
+            *ngIf="project.githubLink" 
+            class="btn btn-outline btn-github"
+            (click)="onViewGitHub(); $event.stopPropagation()">
+            <i class="fab fa-github"></i>
+            Code
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

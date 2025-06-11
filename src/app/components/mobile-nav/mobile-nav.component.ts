@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
     <div class="mobile-nav-overlay" [class.active]="isOpen" (click)="closeNav()">
       <nav class="mobile-nav" [class.active]="isOpen" (click)="$event.stopPropagation()">
         <div class="mobile-nav-header">
-          <h3>Navigation</h3>
+        <img src="assets/favicon.ico" routerLink="/porfolio" alt="logo" class="logo" style="width: 40px; height: 40px; cursor: pointer;" />          
           <button class="close-btn" (click)="closeNav()">
             <i class="fas fa-times"></i>
           </button>

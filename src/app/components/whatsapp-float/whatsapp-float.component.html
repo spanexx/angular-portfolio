@@ -5,14 +5,16 @@
      (mouseleave)="onMouseLeave()"
      (click)="openWhatsApp($event)"
      title="Chat with me on WhatsApp">
-    <!-- WhatsApp Icon -->
+    
+  <!-- WhatsApp Icon -->
   <div class="whatsapp-icon">
     <img src="assets/whatsapp.png" alt="WhatsApp" class="whatsapp-img">
   </div>
   
   <!-- Message tooltip that appears on hover -->
   <div class="whatsapp-tooltip" [class.show]="isHovered">
-    <div class="tooltip-content">      <div class="tooltip-header">
+    <div class="tooltip-content">
+      <div class="tooltip-header">
         <img src="assets/whatsapp.png" alt="WhatsApp" class="tooltip-whatsapp-icon">
         <span>Start a conversation</span>
       </div>
@@ -27,14 +29,11 @@
   </div>
   
   <!-- Close button (optional) -->
-  <button class="close-btn" 
-          (click)="hide(); $event.stopPropagation()" 
-          title="Hide WhatsApp widget"
-          *ngIf="isHovered">
-    <i class="fas fa-times"></i>
-  </button>
-  
-  <!-- Pulsing animation indicator -->
-  <div class="pulse-ring"></div>
-  <div class="pulse-ring-delay"></div>
+  <!-- <button class="close-btn" 
+          (click)="hide(); $event.stopPropagation()"
+          title="Close"
+          aria-label="Close WhatsApp chat">
+    ×
+  </button> -->
 </div>
+         
