@@ -23,13 +23,13 @@ import { RouterModule } from '@angular/router';
               <li><a routerLink="/portfolio" (click)="closeNav()">All Projects</a></li>
             </ul>
           </div>
-          
-          <div class="nav-section">
+            <div class="nav-section">
             <h4>Experience</h4>
             <ul>
               <li><a routerLink="/experience" (click)="closeNav()">Work History</a></li>
               <li><a routerLink="/education" (click)="closeNav()">Education</a></li>
               <li><a routerLink="/certifications" (click)="closeNav()">Certifications</a></li>
+              <li><a routerLink="/github-activity" (click)="closeNav()">GitHub Activity</a></li>
             </ul>
           </div>
           

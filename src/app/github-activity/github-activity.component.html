@@ -1,0 +1,59 @@
+<!-- GitHub Activity Feed Container -->
+<div class="github-activity-container">
+  <!-- Header Section -->
+  <div class="header">
+    <h1>🚀 GitHub Activity Feed</h1>
+    <p>Real-time commit tracking for your repositories</p>
+  </div>
+
+  <!-- Status Section -->
+  <div class="status">
+    <div class="status-indicator">
+      <div class="status-dot" [class.active]="isTracking"></div>
+      <span class="status-text" [class.error]="errorMessage">{{ statusText }}</span>
+    </div>
+    <div class="last-update">
+      <span>{{ lastUpdate }}</span>
+    </div>  </div>
+
+  <!-- Activity Feed Section -->
+  <div class="activity-feed">
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="loading">
+      <div class="loading-spinner"></div>
+      <h3>Loading commits...</h3>
+      <p>Fetching your latest GitHub activity</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="errorMessage && !isLoading" class="error">
+      <i class="fas fa-exclamation-triangle"></i>
+      <strong>Error:</strong> {{ errorMessage }}
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && !errorMessage && commits.length === 0" class="empty-state">
+      <i class="fab fa-github"></i>
+      <h3>No activity yet</h3>
+      <p>Enter your GitHub username and click "Start Tracking" to see your recent commits</p>
+    </div>
+
+    <!-- Commits List -->
+    <div *ngIf="!isLoading && !errorMessage && commits.length > 0" class="commits-list">
+      <div 
+        *ngFor="let commit of commits; trackBy: trackByCommitSha" 
+        class="commit-item">
+        <div class="commit-header">
+          <div class="commit-content">
+            <div class="commit-message">{{ commit.commit.message.split('\n')[0] }}</div>            <div class="commit-meta">
+              <span class="repo-name">{{ commit.repository || 'Unknown Repo' }}</span>
+              <span class="commit-sha">{{ getShortSha(commit.sha) }}</span>
+              <span class="commit-author">by {{ commit.commit.author.name }}</span>
+            </div>
+          </div>
+          <div class="commit-time">{{ formatTimeAgo(commit.commit.author.date) }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

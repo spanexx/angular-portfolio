@@ -9,5 +9,6 @@ export const routes: Routes = [
   { path: "education", loadComponent: () => import('./education/education/education.component').then(m => m.EducationComponent) },
   {path: "experience", loadComponent: () => import('./experience/experience/experience.component').then(m => m.ExperienceComponent) },
   {path: "certifications", loadComponent: () => import('./certifications/certifications.component').then(m => m.CertificationsComponent) },
+  {path: "github-activity", loadComponent: () => import('./github-activity/github-activity.component').then(m => m.GithubActivityComponent) },
   { path: '**', redirectTo: '/portfolio' } // Wildcard route for any unmatched paths
 ];

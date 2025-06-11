@@ -1,0 +1,338 @@
+// GitHub Activity Component Styles
+@import '../../styles/abstracts/variables';
+@import '../../styles/abstracts/mixins';
+
+.github-activity-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: $white;
+  border-radius: 12px;
+  box-shadow: $shadow-lg;
+  overflow: hidden;
+  
+  @include mobile {
+    margin: $spacing-md;
+    border-radius: 8px;
+  }
+}
+
+// Header Section
+.header {
+  background: #24292e;
+  color: $white;
+  padding: $spacing-xl;
+  text-align: center;
+  
+  @include mobile {
+    padding: $spacing-lg;
+  }
+
+  h1 {
+    @include heading-2;
+    margin-bottom: $spacing-sm;
+    color: $white;
+    
+    @include mobile {
+      font-size: $font-size-xl;
+    }
+  }
+
+  p {
+    @include body-text;
+    color: rgba($white, 0.8);
+    margin: 0;
+    
+    @include mobile {
+      font-size: $font-size-sm;
+    }
+  }
+}
+
+// Status Section
+.status {
+  padding: $spacing-md $spacing-xl;
+  background: #f6f8fa;
+  border-bottom: 1px solid #e1e4e8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  @include mobile {
+    padding: $spacing-md;
+    flex-direction: column;
+    gap: $spacing-sm;
+    text-align: center;
+  }
+
+  .status-indicator {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #6c757d;
+    transition: all $transition-standard $transition-easing;
+
+    &.active {
+      background: #28a745;
+      animation: pulse 2s infinite;
+    }
+  }
+
+  .status-text {
+    @include body-text;
+    color: #28a745;
+    font-weight: $font-weight-medium;
+
+    &.error {
+      color: #d73a49;
+    }
+  }
+
+  .last-update {
+    @include small-text;
+    color: #586069;
+  }
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+// Activity Feed Section
+.activity-feed {
+  max-height: 500px;
+  overflow-y: auto;
+  
+  @include mobile {
+    max-height: 400px;
+  }
+
+  // Custom scrollbar
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f6f8fa;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #d1d5da;
+    border-radius: 3px;
+
+    &:hover {
+      background: #959da5;
+    }
+  }
+}
+
+// Loading State
+.loading {
+  text-align: center;
+  padding: $spacing-2xl;
+  color: #586069;
+
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #f6f8fa;
+    border-top: 3px solid #0366d6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto $spacing-lg;
+  }
+
+  h3 {
+    @include heading-4;
+    margin-bottom: $spacing-sm;
+    color: #24292e;
+  }
+
+  p {
+    @include body-text;
+    margin: 0;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Error State
+.error {
+  background: #ffeef0;
+  color: #d73a49;
+  padding: $spacing-lg;
+  border-left: 4px solid #d73a49;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+
+  i {
+    font-size: $font-size-lg;
+  }
+
+  strong {
+    font-weight: $font-weight-semibold;
+  }
+}
+
+// Empty State
+.empty-state {
+  text-align: center;
+  padding: $spacing-2xl;
+  color: #586069;
+
+  i {
+    font-size: 4rem;
+    color: #d1d5da;
+    margin-bottom: $spacing-lg;
+  }
+
+  h3 {
+    @include heading-4;
+    margin-bottom: $spacing-sm;
+    color: #24292e;
+  }
+
+  p {
+    @include body-text;
+    margin: 0;
+  }
+}
+
+// Commits List
+.commits-list {
+  .commit-item {
+    padding: $spacing-lg $spacing-xl;
+    border-bottom: 1px solid #e1e4e8;
+    transition: background-color $transition-fast $transition-easing;
+    
+    @include mobile {
+      padding: $spacing-md;
+    }
+
+    &:hover {
+      background: #f6f8fa;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .commit-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: $spacing-md;
+      
+      @include mobile {
+        flex-direction: column;
+        gap: $spacing-sm;
+      }
+    }
+
+    .commit-content {
+      flex: 1;
+      min-width: 0; // Prevent overflow
+    }
+
+    .commit-message {
+      @include body-text;
+      font-weight: $font-weight-semibold;
+      color: #24292e;
+      margin-bottom: $spacing-xs;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .commit-meta {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+      flex-wrap: wrap;
+      
+      @include small-text;
+      color: #586069;
+    }
+
+    .repo-name {
+      background: #f1f8ff;
+      color: #0366d6;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: $font-weight-semibold;
+    }
+
+    .commit-sha {
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      background: #f6f8fa;
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-size: 11px;
+    }
+
+    .commit-author {
+      @include small-text;
+    }
+
+    .commit-time {
+      @include small-text;
+      color: #586069;
+      font-weight: $font-weight-medium;
+      white-space: nowrap;
+      
+      @include mobile {
+        align-self: flex-start;
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@include mobile {
+  .github-activity-container {
+    margin: $spacing-sm;
+  }
+
+  .status {
+    .status-indicator,
+    .last-update {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .config-section {
+    .button-group {
+      .btn {
+        width: 100%;
+      }
+    }
+  }
+}
+
+// Animation for new commits (optional enhancement)
+.commit-item {
+  animation: slideInCommit 0.3s ease-out;
+}
+
+@keyframes slideInCommit {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
