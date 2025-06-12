@@ -82,7 +82,6 @@
       animation: pulse 2s infinite;
     }
   }
-
   .status-text {
     @include body-text;
     color: #28a745;
@@ -90,6 +89,46 @@
 
     &.error {
       color: #d73a49;
+    }
+  }
+
+  .status-actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+  }
+
+  .refresh-btn {
+    background: transparent;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: #586069;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+
+    &:hover:not(:disabled) {
+      background: #f6f8fa;
+      border-color: #d0d7de;
+      color: #24292f;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    i {
+      font-size: 0.875rem;
+      
+      &.spinning {
+        animation: spin 1s linear infinite;
+      }
     }
   }
 
@@ -103,6 +142,11 @@
   0% { opacity: 1; }
   50% { opacity: 0.5; }
   100% { opacity: 1; }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 // Activity Feed Section

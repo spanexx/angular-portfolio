@@ -5,16 +5,23 @@
     <h1>🚀 GitHub Activity Feed</h1>
     <p>Real-time commit tracking for your repositories</p>
   </div>
-
   <!-- Status Section -->
   <div class="status">
     <div class="status-indicator">
       <div class="status-dot" [class.active]="isTracking"></div>
       <span class="status-text" [class.error]="errorMessage">{{ statusText }}</span>
     </div>
-    <div class="last-update">
-      <span>{{ lastUpdate }}</span>
-    </div>  </div>
+    <div class="status-actions">
+      <button 
+        class="refresh-btn" 
+        (click)="forceRefresh()"
+        [disabled]="isLoading"
+        title="Refresh now">
+        <i class="fas fa-sync-alt" [class.spinning]="isLoading"></i>
+      </button>
+      <span class="last-update">{{ lastUpdate }}</span>
+    </div>
+  </div>
 
   <!-- Activity Feed Section -->
   <div class="activity-feed">
@@ -45,7 +52,8 @@
         class="commit-item">
         <div class="commit-header">
           <div class="commit-content">
-            <div class="commit-message">{{ commit.commit.message.split('\n')[0] }}</div>            <div class="commit-meta">
+            <div class="commit-message">{{ commit.commit.message.split('\n')[0] }}</div>            
+            <div class="commit-meta">
               <span class="repo-name">{{ commit.repository || 'Unknown Repo' }}</span>
               <span class="commit-sha">{{ getShortSha(commit.sha) }}</span>
               <span class="commit-author">by {{ commit.commit.author.name }}</span>

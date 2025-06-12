@@ -98,7 +98,6 @@ export class GithubActivityComponent implements OnInit, OnDestroy {
     if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
     return `${Math.floor(diffInSeconds / 86400)} days ago`;
   }
-
   async startTracking(): Promise<void> {
     if (this.isTracking) return;
 
@@ -110,16 +109,14 @@ export class GithubActivityComponent implements OnInit, OnDestroy {
     this.isTracking = true;
     this.errorMessage = '';
 
-    // Only fetch if we don't have recent cached data
-    if (this.githubService.shouldRefresh(this.username)) {
-      await this.updateCommits();
-    }
+    // Always fetch fresh data when user starts tracking
+    await this.updateCommits();
 
-    // Set up periodic refresh (every 5 minutes instead of 30 seconds to be more reasonable)
-    this.trackingInterval = interval(5 * 60 * 1000).subscribe(() => {
-      if (this.githubService.shouldRefresh(this.username)) {
-        this.updateCommits();
-      }
+    // Set up more frequent refresh (every 2 minutes for better user experience)
+    this.trackingInterval = interval(2 * 60 * 1000).subscribe(async () => {
+      console.log('Checking for GitHub updates...');
+      // Force refresh every 2 minutes regardless of cache
+      await this.updateCommits();
     });
   }
 
@@ -134,10 +131,10 @@ export class GithubActivityComponent implements OnInit, OnDestroy {
       this.trackingInterval = undefined;
     }
   }
-
   private async updateCommits(): Promise<void> {
     try {
-      await this.githubService.fetchCommits(this.username, this.token || null);
+      // Use force refresh to bypass cache and get latest data
+      await this.githubService.forceRefresh(this.username, this.token || null);
       // The observables will handle updating the UI
     } catch (error: any) {
       // Error handling is done through the error observable
@@ -148,8 +145,12 @@ export class GithubActivityComponent implements OnInit, OnDestroy {
   getShortSha(sha: string): string {
     return sha.substring(0, 7);
   }
-
   trackByCommitSha(index: number, commit: GitHubCommit): string {
     return commit.sha;
+  }
+
+  async forceRefresh(): Promise<void> {
+    console.log('Manual refresh triggered');
+    await this.updateCommits();
   }
 }

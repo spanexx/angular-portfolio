@@ -1,13 +1,18 @@
-/* Portfolio Main Component Styles */
+/* Portfolio Main Component Styles - GitHub Feel */
 .portfolio-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1.5rem;
   background-color: var(--off-white, #f9fafb);
   min-height: 100vh;
 }
 
-/* Spacing between sections */
+/* GitHub-style spacing between sections */
+app-current-work {
+  display: block;
+  margin-bottom: 2rem;
+}
+
 app-portfolio-header {
   display: block;
   margin-bottom: 2rem;
@@ -15,7 +20,7 @@ app-portfolio-header {
 
 app-completed-projects {
   display: block;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
 }
 
 app-projects-in-progress {
@@ -23,19 +28,21 @@ app-projects-in-progress {
   margin-bottom: 3rem;
 }
 
-/* Global section styling */
+/* GitHub-style global section styling */
 ::ng-deep section {
   background-color: white;
-  border-radius: 12px;
-  padding: 2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  margin-bottom: 2rem;
   border: 1px solid var(--border-color, #e5e7eb);
-  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+  transition: all 0.2s ease-in-out;
 }
 
 ::ng-deep section:hover {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  border-color: rgba(37, 99, 235, 0.3);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
 }
 
 /* Ensure see-more buttons are outside grid flow */

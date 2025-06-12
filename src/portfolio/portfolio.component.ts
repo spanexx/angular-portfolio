@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PortfolioHeaderComponent } from './portfolio-header/portfolio-header.component';
 import { CompletedProjectsComponent } from './completed-projects/completed-projects.component';
 import { ProjectsInProgressComponent } from './projects-in-progress/projects-in-progress.component';
+import { CurrentWorkComponent } from '../app/components/current-work/current-work.component';
 
 @Component({
   selector: 'app-portfolio',
@@ -10,6 +11,7 @@ import { ProjectsInProgressComponent } from './projects-in-progress/projects-in-
   imports: [
     CommonModule,
     PortfolioHeaderComponent,
+    CurrentWorkComponent,
     CompletedProjectsComponent,
     ProjectsInProgressComponent
   ],

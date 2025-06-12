@@ -1,0 +1,66 @@
+<div class="current-work-container" *ngIf="!isLoading">
+  <!-- Header -->
+  <div class="section-header">
+    <div class="header-content">
+      <h2>🚀 Currently Working On</h2>
+      <p>Real-time updates from my GitHub activity</p>
+    </div>
+    <button class="view-all-btn" (click)="viewFullActivity()" title="View all GitHub activity">
+      <i class="fab fa-github"></i>
+      View All Activity
+    </button>
+  </div>
+
+  <!-- Current Project Card -->
+  <div class="project-card" *ngIf="currentProject" (click)="openGitHubRepo()">
+    <div class="card-header">
+      <div class="project-info">
+        <h3 class="project-name">{{ currentProject.name }}</h3>
+        <span class="project-type">{{ currentProject.type }}</span>
+      </div>
+      <div class="project-status" [style.background-color]="currentProject.status.color">
+        {{ currentProject.status.text }}
+      </div>
+    </div>
+
+    <div class="card-body">
+      <p class="project-description">{{ currentProject.description }}</p>
+      
+      <div class="latest-commit">
+        <div class="commit-info">
+          <i class="fas fa-code-branch"></i>
+          <span class="commit-message">{{ currentProject.commitMessage }}</span>
+          <span class="commit-sha">#{{ currentProject.commitSha }}</span>
+        </div>
+        <div class="commit-time">
+          <i class="far fa-clock"></i>
+          {{ currentProject.lastActivity }}
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <div class="github-link">
+        <i class="fab fa-github"></i>
+        <span>{{ currentProject.repository }}</span>
+      </div>
+      <div class="click-hint">
+        <span>Click to view on GitHub</span>
+        <i class="fas fa-external-link-alt"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-card" *ngIf="isLoading">
+    <div class="loading-spinner"></div>
+    <p>Loading current project...</p>
+  </div>
+
+  <!-- No Data State -->
+  <div class="no-data-card" *ngIf="!currentProject && !isLoading">
+    <i class="fab fa-github"></i>
+    <h3>No Recent Activity</h3>
+    <p>Check back later for updates on my latest projects</p>
+  </div>
+</div>

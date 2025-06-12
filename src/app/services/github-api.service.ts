@@ -32,7 +32,7 @@ interface CachedData {
 })
 export class GithubApiService {
   private readonly baseUrl = environment.githubApiUrl;
-  private readonly CACHE_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
+  private readonly CACHE_DURATION = 2 * 60 * 1000; // Reduced to 2 minutes for more frequent updates
   private readonly CACHE_KEY = 'github_commits_cache';
   
   private commitsSubject = new BehaviorSubject<GitHubCommit[]>([]);
@@ -42,18 +42,74 @@ export class GithubApiService {
   public commits$ = this.commitsSubject.asObservable();
   public loading$ = this.loadingSubject.asObservable();
   public error$ = this.errorSubject.asObservable();
-
   constructor(private http: HttpClient) {
+    console.log('GitHub API Service initialized');
     this.loadFromCache();
   }
-  async fetchCommits(username: string, token: string | null = null): Promise<GitHubCommit[]> {
+
+  // Force refresh - bypass cache
+  async forceRefresh(username: string, token: string | null = null): Promise<GitHubCommit[]> {
+    console.log(`Force refreshing commits for ${username}...`);
+    
+    this.loadingSubject.next(true);
+    this.errorSubject.next(null);
+
+    try {
+      const headers = this.buildHeaders(token);
+      const repos = await this.fetchUserRepositories(username, headers);
+      console.log(`Found ${repos.length} repositories for ${username}`);
+      
+      const commits: GitHubCommit[] = [];
+      const repoPromises = repos.slice(0, 5).map(async (repo) => {
+        try {
+          const repoCommits = await this.fetchRepositoryCommits(username, repo.name, headers);
+          return repoCommits.map(commit => ({
+            ...commit,
+            repository: repo.name,
+            repository_url: repo.html_url
+          }));
+        } catch (error) {
+          console.warn(`Failed to fetch commits for ${repo.name}:`, error);
+          return [];
+        }
+      });
+
+      const allRepoCommits = await Promise.all(repoPromises);
+      allRepoCommits.forEach(repoCommits => {
+        commits.push(...repoCommits);
+      });
+
+      commits.sort((a, b) => 
+        new Date(b.commit.author.date).getTime() - new Date(a.commit.author.date).getTime()
+      );
+
+      const finalCommits = commits.slice(0, 20);
+      
+      // Update cache with fresh data
+      this.cacheData(username, finalCommits);
+      this.commitsSubject.next(finalCommits);
+      
+      return finalCommits;
+    } catch (error: any) {
+      console.error('Error force refreshing commits:', error);
+      const errorMessage = this.formatErrorMessage(error);
+      this.errorSubject.next(errorMessage);
+      throw new Error(errorMessage);
+    } finally {
+      this.loadingSubject.next(false);
+    }
+  }async fetchCommits(username: string, token: string | null = null): Promise<GitHubCommit[]> {
+    console.log(`Fetching commits for ${username}, cache check...`);
+    
     // Check if we have cached data that's still valid
     const cachedData = this.getValidCachedData(username);
     if (cachedData) {
+      console.log(`Using cached data for ${username}, ${cachedData.commits.length} commits`);
       this.commitsSubject.next(cachedData.commits);
       return cachedData.commits;
     }
 
+    console.log(`No valid cache found for ${username}, fetching fresh data...`);
     this.loadingSubject.next(true);
     this.errorSubject.next(null);
 
@@ -62,6 +118,8 @@ export class GithubApiService {
 
       // First, get user's repositories
       const repos = await this.fetchUserRepositories(username, headers);
+      console.log(`Found ${repos.length} repositories for ${username}`);
+      
       const commits: GitHubCommit[] = [];
 
       // Get recent commits from each repository (limit to 5 repos to avoid rate limits)
