@@ -38,16 +38,10 @@ export class CurrentWorkComponent implements OnInit, OnDestroy {
   private async loadCurrentWork() {
     try {
       this.isLoading = true;
-      // Try to get cached data first
-      const cachedCommits = this.githubService.getCachedCommits('spanexx');
-      if (cachedCommits && cachedCommits.length > 0) {
-        this.processLatestCommit(cachedCommits[0]);
-      } else {
-        // Fetch fresh data if no cache
-        const commits = await this.githubService.fetchCommits('spanexx', 'YOUR_GITHUB_TOKEN_HERE');
-        if (commits && commits.length > 0) {
-          this.processLatestCommit(commits[0]);
-        }
+      // Always fetch latest commits (or use fetchCommitsIfNew for optimized requests)
+      const commits = await this.githubService.fetchCommits('spanexx', 'YOUR_GITHUB_TOKEN_HERE');
+      if (commits && commits.length > 0) {
+        this.processLatestCommit(commits[0]);
       }
     } catch (error) {
       console.warn('Failed to load current work:', error);

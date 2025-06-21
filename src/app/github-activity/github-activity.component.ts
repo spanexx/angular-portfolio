@@ -65,25 +65,8 @@ export class GithubActivityComponent implements OnInit, OnDestroy {
   }
 
   private async loadCachedDataAndStart(): Promise<void> {
-    // First, try to get cached data immediately
-    const cachedCommits = this.githubService.getCachedCommits(this.username);
-    
-    if (cachedCommits && cachedCommits.length > 0) {
-      // We have cached data, show it immediately
-      this.statusText = `Showing ${this.username}'s activity (cached)`;
-      this.lastUpdate = 'Loaded from cache';
-      
-      // Check if we should refresh in background
-      if (this.githubService.shouldRefresh(this.username)) {
-        // Start background refresh
-        this.githubService.refreshInBackground(this.username, this.token || null);
-      }
-    } else {
-      // No cached data, need to fetch
-      this.statusText = 'Loading your GitHub activity...';
-    }
-
-    // Auto-start tracking if username is provided
+    // No cache logic needed, just start tracking
+    this.statusText = 'Loading your GitHub activity...';
     if (this.username) {
       setTimeout(() => this.startTracking(), 1000);
     }
@@ -133,8 +116,8 @@ export class GithubActivityComponent implements OnInit, OnDestroy {
   }
   private async updateCommits(): Promise<void> {
     try {
-      // Use force refresh to bypass cache and get latest data
-      await this.githubService.forceRefresh(this.username, this.token || null);
+      // Only fetch if there is a new commit
+      await this.githubService.fetchCommitsIfNew(this.username, this.token || null);
       // The observables will handle updating the UI
     } catch (error: any) {
       // Error handling is done through the error observable

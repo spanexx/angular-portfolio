@@ -21,19 +21,11 @@ export interface GitHubCommit {
   repository_url?: string;
 }
 
-interface CachedData {
-  commits: GitHubCommit[];
-  timestamp: number;
-  username: string;
-}
-
 @Injectable({
   providedIn: 'root'
 })
 export class GithubApiService {
   private readonly baseUrl = environment.githubApiUrl;
-  private readonly CACHE_DURATION = 2 * 60 * 1000; // Reduced to 2 minutes for more frequent updates
-  private readonly CACHE_KEY = 'github_commits_cache';
   
   private commitsSubject = new BehaviorSubject<GitHubCommit[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
@@ -42,9 +34,10 @@ export class GithubApiService {
   public commits$ = this.commitsSubject.asObservable();
   public loading$ = this.loadingSubject.asObservable();
   public error$ = this.errorSubject.asObservable();
+  private lastSeenCommitSha: string | null = null;
+  
   constructor(private http: HttpClient) {
     console.log('GitHub API Service initialized');
-    this.loadFromCache();
   }
 
   // Force refresh - bypass cache
@@ -85,8 +78,6 @@ export class GithubApiService {
 
       const finalCommits = commits.slice(0, 20);
       
-      // Update cache with fresh data
-      this.cacheData(username, finalCommits);
       this.commitsSubject.next(finalCommits);
       
       return finalCommits;
@@ -101,15 +92,6 @@ export class GithubApiService {
   }async fetchCommits(username: string, token: string | null = null): Promise<GitHubCommit[]> {
     console.log(`Fetching commits for ${username}, cache check...`);
     
-    // Check if we have cached data that's still valid
-    const cachedData = this.getValidCachedData(username);
-    if (cachedData) {
-      console.log(`Using cached data for ${username}, ${cachedData.commits.length} commits`);
-      this.commitsSubject.next(cachedData.commits);
-      return cachedData.commits;
-    }
-
-    console.log(`No valid cache found for ${username}, fetching fresh data...`);
     this.loadingSubject.next(true);
     this.errorSubject.next(null);
 
@@ -151,8 +133,6 @@ export class GithubApiService {
 
       const finalCommits = commits.slice(0, 20); // Return latest 20 commits
       
-      // Cache the results
-      this.cacheData(username, finalCommits);
       this.commitsSubject.next(finalCommits);
       
       return finalCommits;
@@ -166,91 +146,45 @@ export class GithubApiService {
     }
   }
 
-  // Method to get cached commits without making API call
-  getCachedCommits(username: string): GitHubCommit[] | null {
-    const cachedData = this.getValidCachedData(username);
-    if (cachedData) {
-      this.commitsSubject.next(cachedData.commits);
-      return cachedData.commits;
-    }
-    return null;
-  }
+  // Fetch commits only if there is a new commit (by SHA)
+  async fetchCommitsIfNew(username: string, token: string | null = null): Promise<GitHubCommit[]> {
+    const headers = this.buildHeaders(token);
+    const repos = await this.fetchUserRepositories(username, headers);
+    if (repos.length === 0) return [];
 
-  // Method to refresh data in background
-  async refreshInBackground(username: string, token: string | null = null): Promise<void> {
-    try {
-      await this.fetchCommits(username, token);
-    } catch (error) {
-      console.warn('Background refresh failed:', error);
-    }
-  }
-
-  // Check if cache needs refresh
-  shouldRefresh(username: string): boolean {
-    return !this.getValidCachedData(username);
-  }
-
-  private loadFromCache(): void {
-    try {
-      const cached = localStorage.getItem(this.CACHE_KEY);
-      if (cached) {
-        const data: CachedData = JSON.parse(cached);
-        if (this.isCacheValid(data)) {
-          this.commitsSubject.next(data.commits);
+    // Get the latest commit SHA from all repos
+    let latestSha: string | null = null;
+    let latestDate: number = 0;
+    let latestRepo: GitHubRepo | null = null;
+    for (const repo of repos) {
+      const commits = await this.fetchRepositoryCommits(username, repo.name, headers);
+      if (commits.length > 0) {
+        const commitDate = new Date(commits[0].commit.author.date).getTime();
+        if (commitDate > latestDate) {
+          latestDate = commitDate;
+          latestSha = commits[0].sha;
+          latestRepo = repo;
         }
       }
-    } catch (error) {
-      console.warn('Failed to load from cache:', error);
     }
-  }
-
-  private cacheData(username: string, commits: GitHubCommit[]): void {
-    try {
-      // Get existing cached data for this user
-      const cached = localStorage.getItem(this.CACHE_KEY);
-      let mergedCommits = commits;
-      if (cached) {
-        const data: CachedData = JSON.parse(cached);
-        if (data.username === username && Array.isArray(data.commits)) {
-          // Merge, deduplicate by SHA
-          const shaSet = new Set(commits.map(c => c.sha));
-          const additionalCommits = data.commits.filter(c => !shaSet.has(c.sha));
-          mergedCommits = [...commits, ...additionalCommits];
-        }
+    if (latestSha && latestSha !== this.lastSeenCommitSha) {
+      // New commit found, fetch all recent commits as before
+      this.lastSeenCommitSha = latestSha;
+      const allCommits: GitHubCommit[] = [];
+      for (const repo of repos) {
+        const repoCommits = await this.fetchRepositoryCommits(username, repo.name, headers);
+        allCommits.push(...repoCommits.map(commit => ({ ...commit, repository: repo.name, repository_url: repo.html_url })));
       }
-      // Sort by date (newest first)
-      mergedCommits.sort((a, b) => new Date(b.commit.author.date).getTime() - new Date(a.commit.author.date).getTime());
-      // Keep only the latest 20
-      mergedCommits = mergedCommits.slice(0, 20);
-      const data: CachedData = {
-        commits: mergedCommits,
-        timestamp: Date.now(),
-        username
-      };
-      localStorage.setItem(this.CACHE_KEY, JSON.stringify(data));
-    } catch (error) {
-      console.warn('Failed to cache data:', error);
+      allCommits.sort((a, b) => new Date(b.commit.author.date).getTime() - new Date(a.commit.author.date).getTime());
+      const finalCommits = allCommits.slice(0, 20);
+      this.commitsSubject.next(finalCommits);
+      return finalCommits;
+    } else {
+      // No new commit, do not fetch again
+      return this.commitsSubject.getValue();
     }
   }
 
-  private getValidCachedData(username: string): CachedData | null {
-    try {
-      const cached = localStorage.getItem(this.CACHE_KEY);
-      if (cached) {
-        const data: CachedData = JSON.parse(cached);
-        if (data.username === username && this.isCacheValid(data)) {
-          return data;
-        }
-      }
-    } catch (error) {
-      console.warn('Failed to get cached data:', error);
-    }
-    return null;
-  }
-
-  private isCacheValid(data: CachedData): boolean {
-    return (Date.now() - data.timestamp) < this.CACHE_DURATION;
-  }
   private buildHeaders(token: string | null): HttpHeaders {
     let headers = new HttpHeaders({
       'Accept': 'application/vnd.github.v3+json'
