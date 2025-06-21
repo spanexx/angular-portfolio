@@ -264,19 +264,30 @@ export class GithubApiService {
   }
 
   private async fetchUserRepositories(username: string, headers: HttpHeaders): Promise<GitHubRepo[]> {
-    const url = `${this.baseUrl}/users/${username}/repos?sort=updated&per_page=10`;
-    
-    try {
-      const response = await firstValueFrom(
-        this.http.get<GitHubRepo[]>(url, { headers })
-      );
-      return response;
-    } catch (error: any) {
-      if (error.status === 404) {
-        throw new Error(`User '${username}' not found`);
+    let repos: GitHubRepo[] = [];
+    let page = 1;
+    const perPage = 100; // GitHub API max per page
+    let hasMore = true;
+    while (hasMore) {
+      const url = `${this.baseUrl}/users/${username}/repos?sort=updated&per_page=${perPage}&page=${page}`;
+      try {
+        const response = await firstValueFrom(
+          this.http.get<GitHubRepo[]>(url, { headers })
+        );
+        repos = repos.concat(response);
+        if (response.length < perPage) {
+          hasMore = false;
+        } else {
+          page++;
+        }
+      } catch (error: any) {
+        if (error.status === 404) {
+          throw new Error(`User '${username}' not found`);
+        }
+        throw error;
       }
-      throw error;
     }
+    return repos;
   }
 
   private async fetchRepositoryCommits(username: string, repoName: string, headers: HttpHeaders): Promise<GitHubCommit[]> {
