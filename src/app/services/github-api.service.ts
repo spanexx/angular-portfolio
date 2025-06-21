@@ -206,8 +206,24 @@ export class GithubApiService {
 
   private cacheData(username: string, commits: GitHubCommit[]): void {
     try {
+      // Get existing cached data for this user
+      const cached = localStorage.getItem(this.CACHE_KEY);
+      let mergedCommits = commits;
+      if (cached) {
+        const data: CachedData = JSON.parse(cached);
+        if (data.username === username && Array.isArray(data.commits)) {
+          // Merge, deduplicate by SHA
+          const shaSet = new Set(commits.map(c => c.sha));
+          const additionalCommits = data.commits.filter(c => !shaSet.has(c.sha));
+          mergedCommits = [...commits, ...additionalCommits];
+        }
+      }
+      // Sort by date (newest first)
+      mergedCommits.sort((a, b) => new Date(b.commit.author.date).getTime() - new Date(a.commit.author.date).getTime());
+      // Keep only the latest 20
+      mergedCommits = mergedCommits.slice(0, 20);
       const data: CachedData = {
-        commits,
+        commits: mergedCommits,
         timestamp: Date.now(),
         username
       };
