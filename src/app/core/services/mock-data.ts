@@ -329,7 +329,7 @@ export const mockProjectsInProgress: Project[] = [
     projectUrl: 'https://kolocollect-demo.onrender.com',
     inProgress: true,
     progress: 75,
-    githubLink: 'https://github.com/spanexx/kolocollect',
+    githubLink: 'https://github.com/spanexx/KolocollectV1',
     features: [
       'Wallet dashboard with balance tracking',
       'Fixed deposit system with tiered interest rates',
@@ -343,6 +343,41 @@ export const mockProjectsInProgress: Project[] = [
       'Mobile-responsive design',
       'Database optimization for performance',
       'Backend performance monitoring'
+    ]
+  },
+  {
+    id: 'angular-advanced-ui',
+    title: 'Angular Advanced UI Components (Showcase)',
+    status: ProjectStatus.Active,
+    description: 'An end-to-end implementation of reusable, configurable advanced UI components in Angular, including a feature-rich data table and dynamic form, connected to a real backend API using Node.js, Express, and MongoDB.',
+    technologies: [
+      'Angular 20 (standalone components)',
+      'Angular Material & CDK',
+      'RxJS & Observables',
+      'Node.js',
+      'Express',
+      'MongoDB',
+      'Mongoose',
+      'SCSS',
+      'TailwindCSS ready'
+    ],
+    // imageUrl: '',
+    projectUrl: 'https://github.com/spanexx/angular-advanced-ui',
+    inProgress: true,
+    progress: 30, // Estimated progress
+    githubLink: 'https://github.com/spanexx/angular-advanced-ui',
+    features: [
+      'Advanced Data Table: Pagination, sorting, filtering (client/server), dynamic columns, virtual scroll, export/import, accessibility, and more(In Progress).',
+      'Dynamic Form: Schema-driven, supports all field types, validation, conditional logic, async hooks(In Progress).',
+      'Stepper Wizard: Step-based UI wizard with validation (In Progress).',
+      'Modal Service: Centralized modal service with injectable config (coming soon).',
+      'Smart Search Bar: Intelligent search input with debounce/autocomplete (coming soon).',
+      'Infinite Scroll: Lazy-loaded infinite scroll directive/component (coming soon).',
+      'File Upload Zone: Drag-and-drop file upload with preview (coming soon).',
+      'Notification System: Toast/snackbar system with global injection (In Progress).',
+      'Editable Grid: Grid/table with inline editing (coming soon).',
+      'Filter Builder: Visual query builder for dynamic filtering (coming soon).',
+      
     ]
   }
 ];

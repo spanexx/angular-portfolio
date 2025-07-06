@@ -36,6 +36,35 @@ export class GithubApiService {
   public error$ = this.errorSubject.asObservable();
   private lastSeenCommitSha: string | null = null;
   
+  // --- Caching helpers ---
+  private readonly CACHE_KEY = 'github_commits_cache';
+
+  private saveToCache(username: string, commits: GitHubCommit[]): void {
+    const data = { username, commits, timestamp: Date.now() };
+    localStorage.setItem(this.CACHE_KEY, JSON.stringify(data));
+  }
+
+  // Make this method public so it can be used in the component
+  public loadFromCache(username: string): GitHubCommit[] | null {
+    const cached = localStorage.getItem(this.CACHE_KEY);
+    if (cached) {
+      try {
+        const data = JSON.parse(cached);
+        if (data.username === username && Array.isArray(data.commits)) {
+          return data.commits;
+        }
+      } catch {}
+    }
+    return null;
+  }
+
+  // --- Fetch and cache logic ---
+  async fetchAndCacheCommits(username: string, token: string | null = null): Promise<GitHubCommit[]> {
+    const commits = await this.fetchCommits(username, token);
+    this.saveToCache(username, commits);
+    return commits;
+  }
+
   constructor(private http: HttpClient) {
     console.log('GitHub API Service initialized');
   }

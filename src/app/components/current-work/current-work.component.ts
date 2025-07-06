@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GithubApiService, GitHubCommit } from '../../services/github-api.service';
 import { Subscription } from 'rxjs';
+import { mockProjectsInProgress } from '../../core/services/mock-data';
 
 @Component({
   selector: 'app-current-work',
@@ -38,15 +39,50 @@ export class CurrentWorkComponent implements OnInit, OnDestroy {
   private async loadCurrentWork() {
     try {
       this.isLoading = true;
-      // Always fetch latest commits (or use fetchCommitsIfNew for optimized requests)
-      const commits = await this.githubService.fetchCommits('spanexx', 'YOUR_GITHUB_TOKEN_HERE');
+      // Use the same logic as the activity page: load from cache first, then fetch and cache if needed
+      let commits = this.githubService.loadFromCache('spanexx');
+      if (!commits || commits.length === 0) {
+        commits = await this.githubService.fetchAndCacheCommits('spanexx', 'YOUR_GITHUB_TOKEN_HERE');
+      }
       if (commits && commits.length > 0) {
-        this.processLatestCommit(commits[0]);
+        this.processLatestCommit(commits[0]); // Only show the most recent
+      } else {
+        this.setKolocollectFallback();
       }
     } catch (error) {
+      this.setKolocollectFallback();
       console.warn('Failed to load current work:', error);
     } finally {
       this.isLoading = false;
+    }
+  }
+
+  private setKolocollectFallback() {
+    const kolo = mockProjectsInProgress.find(p => p.id === 'kolocollect-platform');
+    if (kolo) {
+      this.currentProject = {
+        name: kolo.title,
+        type: 'In Progress',
+        status: { text: 'In Progress', color: '#3498db' },
+        description: kolo.description,
+        lastActivity: 'No Recent Activity',
+        repository: kolo.id,
+        repositoryUrl: kolo.githubLink,
+        commitMessage: 'Check back later for updates on my latest projects',
+        commitSha: 'N/A'
+      };
+    } else {
+      this.currentProject = {
+        name: 'No Recent Activity',
+        type: '',
+        status: { text: '', color: '#ccc' },
+        description: 'Check back later for updates on my latest projects',
+        lastActivity: '',
+        repository: '',
+        repositoryUrl: '',
+        commitMessage: '',
+        commitSha: ''
+      };
     }
   }
 

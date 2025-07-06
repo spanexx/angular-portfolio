@@ -65,10 +65,26 @@ export class GithubActivityComponent implements OnInit, OnDestroy {
   }
 
   private async loadCachedDataAndStart(): Promise<void> {
-    // No cache logic needed, just start tracking
-    this.statusText = 'Loading your GitHub activity...';
-    if (this.username) {
-      setTimeout(() => this.startTracking(), 1000);
+    // Try to load from cache first
+    const cachedCommits = this.githubService.loadFromCache(this.username);
+    if (cachedCommits && cachedCommits.length > 0) {
+      this.commits = cachedCommits;
+      this.statusText = `Showing ${this.username}'s activity (cached)`;
+      this.lastUpdate = 'Loaded from cache';
+    } else {
+      // If no cache, fetch and cache
+      this.statusText = 'Loading your GitHub activity...';
+      this.isLoading = true;
+      try {
+        const commits = await this.githubService.fetchAndCacheCommits(this.username, this.token || null);
+        this.commits = commits;
+        this.statusText = `Showing ${this.username}'s activity`;
+        this.lastUpdate = `Last updated: ${new Date().toLocaleTimeString()}`;
+      } catch (error) {
+        this.errorMessage = 'Failed to load GitHub activity.';
+      } finally {
+        this.isLoading = false;
+      }
     }
   }
   formatTimeAgo(dateString: string): string {
@@ -133,7 +149,17 @@ export class GithubActivityComponent implements OnInit, OnDestroy {
   }
 
   async forceRefresh(): Promise<void> {
-    console.log('Manual refresh triggered');
-    await this.updateCommits();
+    this.isLoading = true;
+    this.statusText = 'Refreshing from GitHub...';
+    try {
+      const commits = await this.githubService.fetchAndCacheCommits(this.username, this.token || null);
+      this.commits = commits;
+      this.statusText = `Showing ${this.username}'s activity`;
+      this.lastUpdate = `Last updated: ${new Date().toLocaleTimeString()}`;
+    } catch (error) {
+      this.errorMessage = 'Failed to refresh GitHub activity.';
+    } finally {
+      this.isLoading = false;
+    }
   }
 }
