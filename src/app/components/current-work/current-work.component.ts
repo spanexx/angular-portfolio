@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GithubApiService, GitHubCommit } from '../../services/github-api.service';
+import { GithubBackendService, GitHubCommit } from '../../services/github-backend.service';
 import { Subscription } from 'rxjs';
 import { mockProjectsInProgress } from '../../core/services/mock-data';
 
@@ -17,7 +17,7 @@ export class CurrentWorkComponent implements OnInit, OnDestroy {
   isLoading = false;
   private subscription?: Subscription;
 
-  constructor(private githubService: GithubApiService) {}
+  constructor(private githubService: GithubBackendService) {}
 
   ngOnInit() {
     this.loadCurrentWork();
@@ -36,25 +36,23 @@ export class CurrentWorkComponent implements OnInit, OnDestroy {
     }
   }
 
-  private async loadCurrentWork() {
-    try {
-      this.isLoading = true;
-      // Use the same logic as the activity page: load from cache first, then fetch and cache if needed
-      let commits = this.githubService.loadFromCache('spanexx');
-      if (!commits || commits.length === 0) {
-        commits = await this.githubService.fetchAndCacheCommits('spanexx', 'YOUR_GITHUB_TOKEN_HERE');
-      }
-      if (commits && commits.length > 0) {
-        this.processLatestCommit(commits[0]); // Only show the most recent
-      } else {
+  private loadCurrentWork() {
+    this.isLoading = true;
+    this.githubService.fetchCommits().subscribe({
+      next: (commits) => {
+        if (commits && commits.length > 0) {
+          this.processLatestCommit(commits[0]);
+        } else {
+          this.setKolocollectFallback();
+        }
+        this.isLoading = false;
+      },
+      error: (error) => {
         this.setKolocollectFallback();
+        console.warn('Failed to load current work:', error);
+        this.isLoading = false;
       }
-    } catch (error) {
-      this.setKolocollectFallback();
-      console.warn('Failed to load current work:', error);
-    } finally {
-      this.isLoading = false;
-    }
+    });
   }
 
   private setKolocollectFallback() {
