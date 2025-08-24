@@ -13,8 +13,8 @@ import { ContactInfo, Profile } from '../shared/models';
   styleUrl: './footer.component.css'
 })
 export class FooterComponent implements OnInit {
-  contactInfo!: ContactInfo;
-  profile!: Profile;
+  contactInfo: ContactInfo | undefined;
+  profile: Profile | undefined;
   currentYear = new Date().getFullYear();
 
   constructor(

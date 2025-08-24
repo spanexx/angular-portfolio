@@ -1,14 +1,9 @@
 <div class="timeline-item">
     <div class="timeline-marker"></div>
     <div class="timeline-content">
-        
-    <div class="timeline-date">
-            <i class="fas fa-calendar-alt"></i>
-            {{ date }}
-        </div>
-        
+        <div class="timeline-date">{{ date }}</div>
         <h3 class="timeline-title">{{ title }}</h3>
         <p class="timeline-subtitle" *ngIf="subtitle">{{ subtitle }}</p>
         <p class="timeline-description" *ngIf="description">{{ description }}</p>
-    </div><br><br>
+    </div>
 </div>

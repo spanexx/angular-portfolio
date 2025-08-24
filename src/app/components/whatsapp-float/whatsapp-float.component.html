@@ -7,20 +7,20 @@
      title="Chat with me on WhatsApp">
       <!-- WhatsApp Icon -->
   <div class="whatsapp-icon">
-    <img src="assets/whatsapp.png" alt="WhatsApp" class="whatsapp-img" width="32" height="32">
+    <i class="fab fa-whatsapp" aria-hidden="true"></i>
   </div>
   
   <!-- Message tooltip that appears on hover -->
   <div class="whatsapp-tooltip" [class.show]="isHovered">
     <div class="tooltip-content">      <div class="tooltip-header">
-        <img src="assets/whatsapp.png" alt="WhatsApp" class="tooltip-whatsapp-icon" width="20" height="20">
+        <i class="fab fa-whatsapp tooltip-whatsapp-icon" aria-hidden="true"></i>
         <span>Start a conversation</span>
       </div>
       <div class="tooltip-message">
         Hi! Click here to chat with me on WhatsApp
       </div>
       <div class="tooltip-phone">
-        {{ contactInfo.phone }}
+        {{ contactInfo?.phone }}
       </div>
     </div>
     <div class="tooltip-arrow"></div>

@@ -1,14 +1,14 @@
 <footer class="app-footer">
   <div class="footer-content">
-    <p>&copy; {{ currentYear }} {{ profile.name }} - {{ profile.title }}</p>    <div class="footer-links">
-      <a [href]="'mailto:' + contactInfo.email" class="footer-link">
+    <p>&copy; {{ currentYear }} {{ profile?.name }} - {{ profile?.title }}</p>    <div class="footer-links">
+      <a [href]="'mailto:' + (contactInfo?.email || '')" class="footer-link">
         <i class="fas fa-envelope"></i>
         Contact
       </a>      <a [href]="getWhatsAppUrl()" class="footer-link whatsapp-link" target="_blank">
-        <img src="assets/whatsapp.png" alt="WhatsApp" class="footer-whatsapp-icon" width="16" height="16">
+        <i class="fab fa-whatsapp"></i>
         WhatsApp
       </a>
-      <a *ngFor="let link of contactInfo.socialLinks" 
+      <a *ngFor="let link of contactInfo?.socialLinks" 
          [href]="link.url" 
          class="footer-link" 
          target="_blank">

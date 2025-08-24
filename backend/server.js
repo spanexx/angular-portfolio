@@ -67,6 +67,7 @@ app.use('/api/experiences', require('./routes/experiences'));
 app.use('/api/educations', require('./routes/educations'));
 app.use('/api/certifications', require('./routes/certifications'));
 app.use('/api/contact', require('./routes/contact'));
+app.use('/api/github', require('./routes/github'));
 
 // Health check endpoint with comprehensive information
 app.get('/api/health', async (req, res) => {

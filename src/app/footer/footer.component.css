@@ -52,16 +52,6 @@
   font-size: 1rem;
 }
 
-.footer-whatsapp-icon {
-  width: 16px;
-  height: 16px;
-  transition: transform 0.3s ease;
-}
-
-.whatsapp-link:hover .footer-whatsapp-icon {
-  transform: scale(1.1);
-}
-
 /* Specific icon styling */
 .footer-link .fa-envelope {
   color: #dc3545;

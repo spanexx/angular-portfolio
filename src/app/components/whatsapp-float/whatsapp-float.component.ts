@@ -12,7 +12,7 @@ import { ContactInfo } from '../../shared/models';
   styleUrl: './whatsapp-float.component.css'
 })
 export class WhatsappFloatComponent implements OnInit {
-  contactInfo!: ContactInfo;
+  contactInfo: ContactInfo | undefined;
   isVisible = true;
   isHovered = false;
 

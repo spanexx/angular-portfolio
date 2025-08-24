@@ -1,88 +1,36 @@
-/* Education Component Styles - Enhanced Visual Identity */
+/* Education Component Styles - Simple & Clean */
 #education {
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 4rem 2rem;
-  /* background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); */
+  padding: 3rem 2rem;
+  background: #ffffff;
   color: #333333;
   min-height: calc(100vh - 80px);
-  position: relative;
-  border-bottom: 4px solid #28a745;
-}
-
-/* Background Pattern */
-#education::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: 
-    radial-gradient(circle at 20% 20%, rgba(40, 167, 69, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(40, 167, 69, 0.05) 0%, transparent 50%);
-  pointer-events: none;
 }
 
 #education h2 {
-  font-size: 2.8rem;
-  font-weight: 800;
+  font-size: 2.5rem;
+  font-weight: 600;
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
   color: #2c3e50;
-  position: relative;
-  z-index: 1;
-  text-transform: uppercase;
-  letter-spacing: 2px;
 }
 
-/* Education Icon */
-#education h2::before {
-  content: '🎓';
-  display: block;
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-
+/* Simple underline for title */
 #education h2::after {
   content: '';
-  position: absolute;
-  bottom: -1.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 120px;
-  height: 4px;
-  background: linear-gradient(90deg, #28a745, #20c997);
-  border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
-}
-
-/* Education Badge */
-.education-badge {
-  display: inline-block;
+  display: block;
+  width: 60px;
+  height: 3px;
   background: #28a745;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 25px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 2rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+  margin: 1rem auto 0;
+  border-radius: 2px;
 }
 
-/* Override timeline styles for education */
-#education .timeline-content {
-  border-left: 4px solid #28a745;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-}
-
-#education .timeline-content:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 40px rgba(40, 167, 69, 0.2);
-  border-left-color: #20c997;
+/* Clean timeline integration */
+#education app-timeline {
+  display: block;
+  margin-top: 2rem;
 }
 
 /* Responsive Design */
@@ -92,22 +40,13 @@
   }
 
   #education h2 {
-    font-size: 2.2rem;
+    font-size: 2rem;
     margin-bottom: 2rem;
-    letter-spacing: 1px;
   }
-  
-  #education h2::before {
-    font-size: 2.5rem;
-  }
-  
-  .education-badge {
-    font-size: 0.8rem;
-    padding: 0.4rem 0.8rem;
-  }
-  
-  #education .timeline-content {
-    border-left-width: 3px;
+
+  #education h2::after {
+    width: 40px;
+    height: 2px;
   }
 }
 
@@ -117,39 +56,6 @@
   }
 
   #education h2 {
-    font-size: 1.8rem;
-    letter-spacing: 0.5px;
-  }
-  
-  #education h2::before {
-    font-size: 2rem;
-  }
-  
-  #education h2::after {
-    width: 80px;
-    height: 3px;
-  }
-  
-  .education-badge {
-    font-size: 0.75rem;
-    padding: 0.3rem 0.6rem;
-    margin-bottom: 1.5rem;
+    font-size: 1.75rem;
   }
 }
-
-
-/* Dark theme adjustments */
-:host-context(.dark-theme) #education {
-  background: #1a1a1a;
-  color: #ffffff;
-}
-
-:host-context(.dark-theme) #education h2 {
-  color: #ffffff;
-}
-
-:host-context(.dark-theme) #education h2::after {
-  background: linear-gradient(90deg, #00ff88, #00cc6a);
-}
-
-/* Light theme is default - no overrides needed */

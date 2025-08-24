@@ -36,9 +36,8 @@
 }
 
 .whatsapp-img {
-  width: 32px;
-  height: 32px;
-  filter: brightness(0) invert(1);
+  font-size: 32px;
+  color: white;
 }
 
 /* Tooltip styles */
@@ -79,8 +78,8 @@
 }
 
 .tooltip-whatsapp-icon {
-  width: 20px;
-  height: 20px;
+  font-size: 20px;
+  color: #25d366;
 }
 
 .tooltip-message {
@@ -144,8 +143,7 @@
   }
   
   .whatsapp-img {
-    width: 28px;
-    height: 28px;
+    font-size: 28px;
   }
   
   .whatsapp-tooltip {
