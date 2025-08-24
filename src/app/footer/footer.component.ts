@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MockDataService } from '../core/services/mock-data.service';
+import { ContactService } from '../core/services/contact.service';
+import { PortfolioDataService } from '../core/services/portfolio-data.service';
 import { ContactInfo, Profile } from '../shared/models';
 
 @Component({
@@ -15,10 +17,39 @@ export class FooterComponent implements OnInit {
   profile!: Profile;
   currentYear = new Date().getFullYear();
 
-  constructor(private mockDataService: MockDataService) {}
+  constructor(
+    private mockDataService: MockDataService,
+    private contactService: ContactService,
+    private portfolioDataService: PortfolioDataService
+  ) {}
+  
   ngOnInit(): void {
-    this.contactInfo = this.mockDataService.getContactInfo();
-    this.profile = this.mockDataService.getProfile();
+    this.loadContactInfo();
+    this.loadProfile();
+  }
+
+  private loadContactInfo(): void {
+    this.contactService.getContactInfo().subscribe({
+      next: (contact) => {
+        this.contactInfo = contact;
+      },
+      error: (error) => {
+        console.warn('Failed to load contact info from API, using mock data:', error);
+        this.contactInfo = this.mockDataService.getContactInfo();
+      }
+    });
+  }
+
+  private loadProfile(): void {
+    this.portfolioDataService.getProfile().subscribe({
+      next: (profile) => {
+        this.profile = profile;
+      },
+      error: (error) => {
+        console.warn('Failed to load profile from API, using mock data:', error);
+        this.profile = this.mockDataService.getProfile();
+      }
+    });
   }
 
   getWhatsAppUrl(): string {

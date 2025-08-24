@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { TimelineComponent } from '../../components/timeline/timeline/timeline.component';
 import { Education } from '../../shared/models';
 import { MockDataService } from '../../core/services/mock-data.service';
+import { PortfolioDataService } from '../../core/services/portfolio-data.service';
 
 @Component({
   selector: 'app-education',
@@ -15,10 +16,24 @@ export class EducationComponent implements OnInit {
   educationItems: any[] = [];
   
   private mockDataService = inject(MockDataService);
+  private portfolioDataService = inject(PortfolioDataService);
 
   ngOnInit(): void {
-    this.educations = this.mockDataService.getEducations();
-    this.educationItems = this.transformEducationsToTimelineItems();
+    this.loadEducation();
+  }
+
+  private loadEducation(): void {
+    this.portfolioDataService.getEducation().subscribe({
+      next: (educations) => {
+        this.educations = educations;
+        this.educationItems = this.transformEducationsToTimelineItems();
+      },
+      error: (error) => {
+        console.warn('Failed to load education from API, using mock data:', error);
+        this.educations = this.mockDataService.getEducations();
+        this.educationItems = this.transformEducationsToTimelineItems();
+      }
+    });
   }
 
   private transformEducationsToTimelineItems(): any[] {

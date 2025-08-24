@@ -4,6 +4,13 @@
 /node_modules
 .angular/
 .vscode/
+backend/node_modules
+
+#env files
+.env*
+backend/.env*
+backend/.env.example
+backend/.env.production
 
 # Log files
 npm-debug.log*
@@ -29,3 +36,4 @@ Thumbs.db
 
 live-github/
 environment.ts
+environment.prod.ts

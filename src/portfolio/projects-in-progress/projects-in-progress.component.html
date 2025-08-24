@@ -1,6 +1,21 @@
 <section id="projects-in-progress">
     <h2>Projects in Progress</h2>
-    <div class="projects-grid">
+    
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="loading-container">
+        <div class="loading-spinner"></div>
+        <p>Loading projects in progress...</p>
+    </div>
+    
+    <!-- Error State -->
+    <div *ngIf="error" class="error-container">
+        <p class="error-message">{{ error }}</p>
+        <button class="btn btn-primary" (click)="loadProjectsInProgress()">Retry</button>
+    </div>
+    
+    <!-- Projects Content -->
+    <div *ngIf="!isLoading && !error" class="projects-content">
+        <div class="projects-grid">
         <div class="progress-project-card"
              *ngFor="let project of projectsInProgress"
              (click)="handleCardClick(project)"
@@ -62,8 +77,9 @@
                 </div> -->
             </div>
         </div>
-    </div>
-    <div class="see-more">
-        <a  href="https://github.com/spanexx/" class="btn btn-large">See more ongoing projects</a>
+        </div>
+        <div class="see-more">
+            <a href="https://github.com/spanexx/" class="btn btn-large">See more ongoing projects</a>
+        </div>
     </div>
 </section>

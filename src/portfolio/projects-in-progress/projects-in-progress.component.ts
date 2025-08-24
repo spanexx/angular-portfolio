@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { ProgressBarComponent } from '../../app/components/progress-bar/progress-bar.component';
 import { Project } from '../../app/shared/models';
 import { MockDataService } from '../../app/core/services/mock-data.service';
+import { ProjectService } from '../../app/core/services/project.service';
 
 @Component({
   selector: 'app-projects-in-progress',
@@ -16,14 +17,35 @@ import { MockDataService } from '../../app/core/services/mock-data.service';
 })
 export class ProjectsInProgressComponent implements OnInit {
   projectsInProgress: Project[] = [];
+  isLoading = false;
+  error: string | null = null;
 
   constructor(
     private mockDataService: MockDataService,
+    private projectService: ProjectService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.projectsInProgress = this.mockDataService.getProjectsInProgress();
+    this.loadProjectsInProgress();
+  }
+
+  loadProjectsInProgress(): void {
+    this.isLoading = true;
+    this.error = null;
+    
+    this.projectService.getProjectsInProgress().subscribe({
+      next: (projects) => {
+        this.projectsInProgress = projects;
+        this.isLoading = false;
+      },
+      error: (error) => {
+        // Fallback to mock data if API fails
+        console.warn('API failed, falling back to mock data:', error);
+        this.projectsInProgress = this.mockDataService.getProjectsInProgress();
+        this.isLoading = false;
+      }
+    });
   }
 
   handleCardClick(project: Project): void {

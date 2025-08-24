@@ -1,0 +1,50 @@
+{
+  "name": "portfolio-backend",
+  "version": "1.0.0",
+  "description": "Backend API for Angular Portfolio",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node ./node_modules/nodemon/bin/nodemon.js server.js",
+    "dev:env": "cross-env NODE_ENV=development nodemon server.js",
+    "staging": "cross-env NODE_ENV=staging node server.js",
+    "prod": "cross-env NODE_ENV=production node server.js",
+    "dev:win": "set NODE_ENV=development; node ./node_modules/nodemon/bin/nodemon.js server.js",
+    "staging:win": "set NODE_ENV=staging; node server.js",
+    "prod:win": "set NODE_ENV=production; node server.js",
+    "seed": "node scripts/seedData.js",
+    "seed:dev": "cross-env NODE_ENV=development node scripts/seedData.js",
+    "seed:staging": "cross-env NODE_ENV=staging node scripts/seedData.js",
+    "seed:prod": "cross-env NODE_ENV=production node scripts/seedData.js",
+    "validate": "node scripts/validate-environment.js",
+    "validate:dev": "cross-env NODE_ENV=development node scripts/validate-environment.js",
+    "validate:staging": "cross-env NODE_ENV=staging node scripts/validate-environment.js",
+    "validate:prod": "cross-env NODE_ENV=production node scripts/validate-environment.js",
+    "validate:env": "node scripts/validate-env.js",
+    "validate:env:dev": "node scripts/validate-env.js development",
+    "validate:env:staging": "node scripts/validate-env.js staging",
+    "validate:env:prod": "node scripts/validate-env.js production",
+    "test:backend": "node scripts/test-backend.js",
+    "health": "curl http://localhost:3000/api/health || echo 'Server not running'",
+    "deploy:oracle": "bash scripts/deploy-direct.sh",
+    "setup:server": "Instructions: Copy and run scripts/setup-oracle-server.sh on your Oracle Cloud instance",
+    "logs": "tail -f logs/app.log",
+    "clean": "rm -rf node_modules package-lock.json && npm install"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^8.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0",
+    "compression": "^1.7.4",
+    "express-rate-limit": "^7.1.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2",
+    "cross-env": "^7.0.3"
+  },
+  "keywords": ["portfolio", "api", "nodejs", "express", "mongodb"],
+  "author": "Victor Chidera Ani"
+}

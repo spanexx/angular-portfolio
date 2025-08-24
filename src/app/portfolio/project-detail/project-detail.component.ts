@@ -1,10 +1,12 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Project, ProjectVideo, ProjectImage } from '../../shared/models';
 import { MockDataService } from '../../core/services/mock-data.service';
+import { ProjectService } from '../../core/services/project.service';
 import { CommonModule } from '@angular/common';
 import { Location } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-project-detail',
@@ -13,27 +15,100 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   templateUrl: './project-detail.component.html',
   styleUrl: './project-detail.component.css'
 })
-export class ProjectDetailComponent implements OnInit {
+export class ProjectDetailComponent implements OnInit, OnDestroy {
   projectId: string | null = null;
   project: Project | undefined;
+  isLoading = false;
+  error: string | null = null;
+  
+  private subscription = new Subscription();
   private route = inject(ActivatedRoute);
-  private router = inject(Router);  private location = inject(Location);
+  private router = inject(Router);
+  private location = inject(Location);
   private mockDataService = inject(MockDataService);
+  private projectService = inject(ProjectService);
   private sanitizer = inject(DomSanitizer);
 
   ngOnInit(): void {
     this.projectId = this.route.snapshot.paramMap.get('id');
     if (this.projectId) {
-      this.project = this.mockDataService.getProjectById(this.projectId);
-      if (!this.project) {
-        // Project not found, redirect to portfolio
-        this.router.navigate(['/portfolio']);
-      }
+      this.loadProject(this.projectId);
+    } else {
+      this.router.navigate(['/portfolio']);
     }
   }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  private loadProject(id: string): void {
+    this.isLoading = true;
+    this.error = null;
+    
+    // Unsubscribe from any previous request
+    this.subscription.unsubscribe();
+    this.subscription = new Subscription();
+    
+    this.subscription.add(
+      this.projectService.getProjectById(id).subscribe({
+        next: (project) => {
+          if (project) {
+            this.project = project;
+            this.isLoading = false;
+            this.error = null;
+          } else {
+            // Project not found, try mock data
+            this.tryFallbackToMockData(id);
+          }
+        },
+        error: (error) => {
+          console.warn('API request failed, attempting fallback to mock data:', error);
+          this.tryFallbackToMockData(id);
+        }
+      })
+    );
+  }
+
+  private tryFallbackToMockData(id: string): void {
+    try {
+      const mockProject = this.mockDataService.getProjectById(id);
+      if (mockProject) {
+        this.project = mockProject;
+        this.isLoading = false;
+        this.error = null;
+        console.info('Successfully loaded project from mock data');
+      } else {
+        this.handleProjectNotFound();
+      }
+    } catch (fallbackError) {
+      console.error('Failed to load from mock data:', fallbackError);
+      this.handleProjectNotFound();
+    }
+  }
+
+  private handleProjectNotFound(): void {
+    this.isLoading = false;
+    this.error = 'Project not found. The project may have been moved or removed.';
+    // Don't navigate immediately, let user see the error and decide
+  }
+
+  retryLoading(): void {
+    if (this.projectId) {
+      this.loadProject(this.projectId);
+    }
+  }
+
+  navigateToPortfolio(): void {
+    this.router.navigate(['/portfolio']);
+  }
+
   goBack(): void {
- this.router.navigate(['/portfolio']);
+    this.location.back();
+  }
+
+  goToPortfolio(): void {
+    this.router.navigate(['/portfolio']);
   }
 
   openExternalLink(url: string): void {
@@ -67,24 +142,6 @@ export class ProjectDetailComponent implements OnInit {
     }
   }
 
-  onVideoError(event: any): void {
-    console.warn('Video failed to load:', event);
-    const iframe = event.target;
-    const wrapper = iframe.parentElement;
-    
-    // Create error message element
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'video-error';
-    errorDiv.innerHTML = `
-      <i class="fas fa-exclamation-triangle"></i>
-      <span>Video temporarily unavailable</span>
-    `;
-    
-    // Replace iframe with error message
-    wrapper.innerHTML = '';
-    wrapper.appendChild(errorDiv);
-  }
-
   getVideoTypeDisplay(type?: string): string {
     const typeMap: { [key: string]: string } = {
       'demo': 'Demo',
@@ -99,12 +156,6 @@ export class ProjectDetailComponent implements OnInit {
   openImageModal(image: ProjectImage): void {
     // For now, open in new tab. You can implement a modal later
     window.open(image.url, '_blank');
-  }
-  onImageError(event: any): void {
-    // Handle image loading errors
-    const img = event.target;
-    img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNDA0MDQwIi8+CiAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzgwODA4MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlIG5vdCBhdmFpbGFibGU8L3RleHQ+Cjwvc3ZnPg==';
-    img.alt = 'Image not available';
   }
 
   getImageTypeDisplay(type?: string): string {

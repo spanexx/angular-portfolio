@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Certification } from '../shared/models';
 import { MockDataService } from '../core/services/mock-data.service';
+import { PortfolioDataService } from '../core/services/portfolio-data.service';
 
 @Component({
   selector: 'app-certifications',
@@ -14,9 +15,22 @@ export class CertificationsComponent implements OnInit {
   certifications: Certification[] = [];
   
   private mockDataService = inject(MockDataService);
+  private portfolioDataService = inject(PortfolioDataService);
 
   ngOnInit(): void {
-    this.certifications = this.mockDataService.getCertifications();
+    this.loadCertifications();
+  }
+
+  private loadCertifications(): void {
+    this.portfolioDataService.getCertifications().subscribe({
+      next: (certifications) => {
+        this.certifications = certifications;
+      },
+      error: (error) => {
+        console.warn('Failed to load certifications from API, using mock data:', error);
+        this.certifications = this.mockDataService.getCertifications();
+      }
+    });
   }
 
   formatDate(date: string): string {

@@ -9,6 +9,7 @@ import { MockPortfolioDataSource } from './mock-portfolio-data-source';
 import { HttpPortfolioDataSource } from './http-portfolio-data-source';
 import { PortfolioDataSource } from './portfolio-data-source';
 import { HttpClient } from '@angular/common/http';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,11 @@ export class PortfolioDataService {
   private http = inject(HttpClient);
 
   constructor() {
-    this.dataSource = new MockPortfolioDataSource();
+    // Inject ApiService and create HTTP data source
+    const apiService = inject(ApiService);
+    this.dataSource = new HttpPortfolioDataSource(apiService);
+    // Use this line to switch back to mock data if needed:
+    // this.dataSource = new MockPortfolioDataSource();
   }
 
   getProfile(): Observable<Profile> {

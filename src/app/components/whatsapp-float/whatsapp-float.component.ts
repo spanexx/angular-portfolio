@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MockDataService } from '../../core/services/mock-data.service';
+import { ContactService } from '../../core/services/contact.service';
 import { ContactInfo } from '../../shared/models';
 
 @Component({
@@ -15,10 +16,25 @@ export class WhatsappFloatComponent implements OnInit {
   isVisible = true;
   isHovered = false;
 
-  constructor(private mockDataService: MockDataService) {}
+  constructor(
+    private mockDataService: MockDataService,
+    private contactService: ContactService
+  ) {}
 
   ngOnInit(): void {
-    this.contactInfo = this.mockDataService.getContactInfo();
+    this.loadContactInfo();
+  }
+
+  private loadContactInfo(): void {
+    this.contactService.getContactInfo().subscribe({
+      next: (contact) => {
+        this.contactInfo = contact;
+      },
+      error: (error) => {
+        console.warn('Failed to load contact info from API, using mock data:', error);
+        this.contactInfo = this.mockDataService.getContactInfo();
+      }
+    });
   }
 
   getWhatsAppUrl(): string {

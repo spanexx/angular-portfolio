@@ -1,4 +1,32 @@
-<div class="project-detail-container" *ngIf="project; else notFound">
+<!-- Loading State -->
+<div class="loading-container" *ngIf="isLoading">
+  <div class="loading-content">
+    <div class="spinner"></div>
+    <p>Loading project details...</p>
+  </div>
+</div>
+
+<!-- Error State -->
+<div class="error-container" *ngIf="error && !isLoading">
+  <div class="error-content">
+    <i class="fas fa-exclamation-triangle"></i>
+    <h2>Unable to Load Project</h2>
+    <p>{{ error }}</p>
+    <div class="error-actions">
+      <button class="btn btn-primary" (click)="retryLoading()">
+        <i class="fas fa-redo"></i>
+        Retry
+      </button>
+      <button class="btn btn-secondary" (click)="navigateToPortfolio()">
+        <i class="fas fa-arrow-left"></i>
+        Back to Projects
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Project Content -->
+<div class="project-detail-container" *ngIf="project && !isLoading && !error">
   <!-- Breadcrumb Navigation -->
   <nav class="breadcrumb">
     <button class="back-btn" (click)="goBack()">
@@ -59,8 +87,7 @@
             [title]="video.title"
             frameborder="0" 
             allowfullscreen
-            loading="lazy"
-            (error)="onVideoError($event)">
+            loading="lazy">
           </iframe>
         </div>
         <div class="video-info">
@@ -81,7 +108,6 @@
             [src]="image.url" 
             [alt]="image.alt"
             loading="lazy"
-            (error)="onImageError($event)"
             class="project-image">
           <div class="image-overlay">
             <i class="fas fa-expand-alt"></i>
@@ -147,18 +173,3 @@
     </div>
   </div>
 </div>
-
-<!-- Project Not Found Template -->
-<ng-template #notFound>
-  <div class="not-found">
-    <div class="not-found-content">
-      <i class="fas fa-exclamation-triangle"></i>
-      <h2>Project Not Found</h2>
-      <p>The project you're looking for doesn't exist or has been moved.</p>
-      <button class="btn btn-primary" (click)="goBack()">
-        <i class="fas fa-arrow-left"></i>
-        Go Back
-      </button>
-    </div>
-  </div>
-</ng-template>
